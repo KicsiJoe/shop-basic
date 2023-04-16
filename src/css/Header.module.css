@@ -1,0 +1,118 @@
+.header_box {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  /* background-color: aquamarine; */
+  /* border: 1px solid black; */
+  padding: 10px 0 10px 0;
+}
+
+.logo {
+  flex-basis: 200px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  cursor: pointer;
+
+}
+.logo:hover {
+   opacity: 0.8;
+}
+
+.logo_icon {
+  display: grid;
+  place-items: center;
+  font-size: 1.2em;
+}
+.logo div:nth-child(2) {
+  text-align: left;
+  display: grid;
+  align-self: center;
+  font-size: 1.2em;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 20px;
+}
+
+.logo svg {
+  height: 2em;
+  width: 2em;
+}
+.navigation_container {
+  margin: 0 50px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.nav_list {
+  padding: 0 20px;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.nav_list,
+.icon_list {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  gap: 10px;
+  align-items: center;
+}
+
+.nav_list li {
+  margin: 0 10px;
+  font-weight: 500;
+  font-size: 0.8em;
+  cursor: pointer;
+}
+.nav_list li:hover {
+opacity: 0.8;
+}
+.nav_list .shop_li {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.icon_list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+.icon_list span {
+  display: grid;
+  place-items: center;
+}
+.icon_list div {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.icon {
+  font-size: 1.2em;
+}
+
+.icon_boxes {
+   cursor: pointer;
+}
+.icon_boxes:hover {
+   opacity: 0.7;
+}
+
+.numb {
+  font-size: 0.8em;
+}
+
+.icon_arrow_down {
+  display: grid;
+  font-size: 1.1em;
+  place-items: center;
+  justify-self: flex-start;
+  margin-left: 4px;
+}
+.icon_arrow_down path {
+font-weight: 900;
+}
+
