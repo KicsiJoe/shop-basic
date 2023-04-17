@@ -13,7 +13,7 @@ const Home = () => {
             </div>
         </div>
         <div className='main-container'>
-            HOME
+            HOME 
         </div>
         {/* <div className='full_pic'>
             sdfv
