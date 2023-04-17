@@ -7,7 +7,7 @@ import {
   search,
   profile,
   cart,
-} from "../img-icon/icons";
+} from "../icon/icons";
 import Navbar_ul from "../components/Header/Navbar_ul";
 
 const Header = () => {

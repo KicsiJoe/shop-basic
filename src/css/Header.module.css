@@ -12,10 +12,9 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   cursor: pointer;
-
 }
 .logo:hover {
-   opacity: 0.8;
+  opacity: 0.8;
 }
 
 .logo_icon {
@@ -60,15 +59,38 @@
   align-items: center;
 }
 
+.nav_list li a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav_list a.my_active {
+  color: #ff2c3e;
+}
+
 .nav_list li {
   margin: 0 10px;
   font-weight: 500;
   font-size: 0.8em;
   cursor: pointer;
 }
-.nav_list li:hover {
-opacity: 0.8;
+.nav_list li:hover::after {
+  opacity: 0.8;
+  transform: scaleX(1);
+  transform-origin: left;
 }
+
+.nav_list li::after {
+  width: 100%;
+  height: 2px;
+  content: "";
+  display: block;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+  background-color: #ff2c3e;
+}
+
 .nav_list .shop_li {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -95,10 +117,10 @@ opacity: 0.8;
 }
 
 .icon_boxes {
-   cursor: pointer;
+  cursor: pointer;
 }
 .icon_boxes:hover {
-   opacity: 0.7;
+  opacity: 0.7;
 }
 
 .numb {
@@ -113,6 +135,5 @@ opacity: 0.8;
   margin-left: 4px;
 }
 .icon_arrow_down path {
-font-weight: 900;
+  font-weight: 900;
 }
-

@@ -1,3 +1,36 @@
 .main-container {
     margin: 0 auto;
 }
+.full_pic {
+    width: 100%;
+    height: 30vw;
+    position: relative;
+}
+
+img {
+    object-fit: cover;
+    display: block;
+    width: 100%;
+    height: 30vw;
+}
+.img_text {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.img_text p:nth-child(1){
+    font-size: 4.5vw;
+    font-weight: 700;
+    color: white;
+
+}
+.img_text p:nth-child(2){
+    font-size: 2vw;
+    font-weight: 500;
+    font-style: italic;
+    color: white;
+
+}
