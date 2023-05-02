@@ -1,9 +1,13 @@
 import React from 'react';
 
+
 const Account = () => {
+
+   
+
     return (
         <div>
-            ACCOUNT
+            ACCOUNT 
         </div>
     );
 };
