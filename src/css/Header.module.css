@@ -13,6 +13,12 @@
   grid-template-columns: 1fr 1fr;
   cursor: pointer;
 }
+
+.header_box .navigation_container a {
+  text-decoration: none;
+  color: black;
+}
+
 .logo:hover {
   opacity: 0.8;
 }
@@ -61,7 +67,6 @@
 
 .nav_list li a {
   text-decoration: none;
-  color: black;
 }
 
 .nav_list a.my_active {

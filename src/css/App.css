@@ -8,9 +8,15 @@ body {
   width: 100vw;
   overflow-x: hidden;
   position: relative;
+  color: black;
 }
 
-.outlet_container :not(.full_pic, .full_pic > * ) {
+.outlet_container  {
   margin: 0 50px;
   /* border: 1px solid black; */
 }
+
+section.main-container {
+  margin: 0 50px;
+}
+

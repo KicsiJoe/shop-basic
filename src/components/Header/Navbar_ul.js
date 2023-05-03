@@ -14,11 +14,12 @@ const [showModal, setshowModal] = useState(false)
 
   return (
     <ul className={styles.nav_list}>
+      
       <li><NavLink className={({isActive}) => isActive ? styles.my_active : ''} to="/">HOME</NavLink></li>
-      <li className={styles.shop_li} onMouseOver={()=> setshowModal(true)} onMouseLeave={()=> setshowModal(false)}><NavLink  to="/products" className={({isActive}) => isActive ? styles.my_active : ""} >SHOP</NavLink><span className={styles.icon_arrow_down }>{arrow_down}</span>
+      <li className={styles.shop_li} onMouseOver={()=> setshowModal(true)} onMouseLeave={()=> setshowModal(false)}><NavLink  to="/themes" className={({isActive}) => isActive ? styles.my_active : ""} >SHOP</NavLink><span className={styles.icon_arrow_down }>{arrow_down}</span>
       {showModal ? <Modal/> : ""}
       </li>
-      <li><NavLink className={({isActive}) => isActive ? styles.my_active : ''} to="/account">ABOUT US</NavLink></li>
+      <li><NavLink className={({isActive}) => isActive ? styles.my_active : ''} to="/about">ABOUT US</NavLink></li>
     </ul>
   );
 };

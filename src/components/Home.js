@@ -17,12 +17,12 @@ const Home = () => {
           </p>
         </div>
       </div>
-      <div className="main-container">
+      <section className="main-container">
         <h1>HOME</h1>
         <div className="cards_container">
           <Cards />
         </div>
-      </div>
+      </section>
       {/* <div className='full_pic'>
             sdfv
         </div> */}
