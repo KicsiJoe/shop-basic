@@ -1,5 +1,6 @@
+
 import { getUserInfoFirebase, loginUserFirebase, registerUserToFirebase } from "../repositories/authentication";
-import { productFirebase } from "../repositories/productFirebase";
+import { getProducts } from "../repositories/getProduct";
 import { saveNewUserToFirebase } from "../repositories/registration";
 
 export const saveUserToFirebase = (userName, localId, email) => {
@@ -19,7 +20,7 @@ export const getUserInfo=(localId)=>{
 
 export const getProduct=(text)=>{
   //ha itt text = "all", akkor az osszes prroductot lekeri, ha "id", akkor csak egyet
-  return productFirebase(text)
+  return getProducts(text)
 }
 
 

@@ -3,6 +3,8 @@ import Card from "./Card.js";
 import { useEffect } from "react";
 import { useState } from "react";
 import { getProduct } from "../../services/user-services";
+import { v4 as uuid} from 'uuid'
+
 
 const Cards = () => {
   const [productsList, setProductsList] = useState([])
@@ -15,7 +17,7 @@ const Cards = () => {
 
   return (
     <>
-      { productsList?.length > 0 ? (productsList?.map( cardObj =>  <Card key={cardObj[1].id} cardObj={cardObj[1]} />
+      { productsList?.length > 0 ? (productsList?.map( cardObj =>  <Card key={uuid()} cardObj={cardObj[1]} />
       )) : ""
       }
     </>

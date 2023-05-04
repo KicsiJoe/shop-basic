@@ -1,5 +1,63 @@
 .admin_box {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.table_width_title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  gap: 1em;
+}
+
+.title {
+  text-align: center;
+  text-decoration: underline wavy;
+}
+
+.arrows {
+  height: 3em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.arrows div span:nth-child(2){
+    
+   margin-left: 1em;
+}
+
+.arrows span {
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 2em;
+  height: 100%;
+  display: inline-block;
+}
+.arrows span svg {
+  height: 100%;
+  width: 100%;
+  display: inline-block;
+}
+.arrows span svg path {
+  height: 100%;
+  display: inline-block;
+}
+
+/* table {
+    width: min(90%, 600px) ;
+} */
+
+table {
+  width: 70%;
+  margin: 0 auto;
+}
+table th {
+  border: 2px solid black;
+}
+
+table > tbody tr:nth-child(even) {
+  background-color: lightgray;
 }
