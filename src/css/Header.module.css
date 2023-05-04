@@ -122,12 +122,36 @@
   font-size: 1.2em;
 }
 
+.icon svg {
+  display: block;
+}
+
 .icon_boxes {
   cursor: pointer;
 }
 .icon_boxes:hover {
   opacity: 0.7;
 }
+
+.icon_list .text_logout {
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.text_logout a {
+  display: grid;
+  place-items: center;
+}
+.text_logout span:nth-child(1) {
+  cursor:default;
+}
+.text_logout span:hover {
+  color: black;
+  opacity: 1;
+}
+
+
 
 .numb {
   font-size: 0.8em;

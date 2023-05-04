@@ -1,13 +1,17 @@
 import React from "react";
-import { getUserInfo, loginUserService, registerUser, saveUserToFirebase } from "../services/user-services";
+import {
+  getUserInfo,
+  loginUserService,
+  registerUser,
+  saveUserToFirebase,
+} from "../services/user-services";
 import { AuthContext } from "../contexts/AuthContext";
 import { useContext } from "react";
 
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 const Forms = ({ setLoginInputs, loginInputs, basicForm, func, title }) => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { loggedIn, setLoggedIn } = useContext(AuthContext);
   return (
     <div>
@@ -88,16 +92,24 @@ const Forms = ({ setLoginInputs, loginInputs, basicForm, func, title }) => {
 
   function submit(e, func) {
     e.preventDefault();
-    console.log(loginInputs.signUp);
     func == "signUp"
       ? registerUser(loginInputs.signUp).then((res) =>
           res.localId
-            ? saveUserToFirebase(loginInputs.signUp.userName, res.localId, res.email)
+            ? saveUserToFirebase(
+                loginInputs.signUp.userName,
+                res.localId,
+                res.email
+              )
                 .then((res) => setLoggedIn(res))
                 .then((res) => setLoginInputs(basicForm))
             : alert("Nem sikerult a mentes!")
         )
-      : loginUserService(loginInputs.logIn.email, loginInputs.logIn.pwd).then(res=>getUserInfo(res.localId)).then(res=> setLoggedIn(res)).then(res=> navigate("/"));
+      : loginUserService(loginInputs.logIn.email, loginInputs.logIn.pwd)
+          .then((res) => getUserInfo(res.localId))
+          .then((res) => setLoggedIn(res))
+          .then((res) => {
+            return navigate("/account");
+          });
   }
 };
 

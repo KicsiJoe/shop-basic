@@ -9,7 +9,12 @@ import Search from "./components/Search";
 import Cart from "./components/Cart";
 import Favorites from "./components/Favorites";
 import Themes from "./components/Themes";
-import Auth from "./components/Auth";
+import {Auth, AuthAdmin }from "./components/Auth";
+import Admin from "./components/Admin/Admin";
+import AdminProductsList from "./components/Admin/AdminProductsList";
+import AdminDelProduct from "./components/Admin/AdminDelProduct";
+import AdminEditProduct from "./components/Admin/AdminEditProduct"
+import AdminNewProduct from "./components/Admin/AdminNewProduct"
 
 const router = createBrowserRouter([
   {
@@ -34,9 +39,15 @@ const router = createBrowserRouter([
       { path: "/themes", element: <Themes /> },
       { path: "/cart", element: <Cart /> },
       { path: "/account", element: <Account /> },
+      { path: "/admin", element: <AuthAdmin><Admin /> </AuthAdmin>},
+      { path: "/admin/products", element: <AuthAdmin><AdminProductsList /> </AuthAdmin>},
+      { path: "/admin/new-product", element: <AuthAdmin><AdminNewProduct /> </AuthAdmin>},
+      { path: "/admin/product/edit/:productId", element: <AuthAdmin><AdminEditProduct /> </AuthAdmin>},
+      { path: "/admin/product/del/:productId", element: <AuthAdmin><AdminDelProduct /> </AuthAdmin>},
     ],
   },
 ]);
+  
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
