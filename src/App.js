@@ -7,7 +7,6 @@ import { AuthContext } from "./contexts/AuthContext";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState({});
-  console.log(loggedIn);
   return (
     <AuthContext.Provider value={{ loggedIn, setLoggedIn }}>
       <div className="main-container">

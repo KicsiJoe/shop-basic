@@ -8,6 +8,6 @@ export const editProducService=(inputs)=>{
    return editProducServiceFirebase(inputs)
 }
 
-export const getProductsList=()=>{
-   return getProducts("all").then(res=> Object.entries(res))
+export const getProductsList=(what)=>{
+   return getProducts(what).then(res=> Object.entries(res))
 }

@@ -13,7 +13,7 @@ const Cards = () => {
     getProduct("all").then(res=> setProductsList(Object.entries(res)))
   }, [])
   
-  console.log(productsList);
+  // console.log(productsList);
 
   return (
     <>

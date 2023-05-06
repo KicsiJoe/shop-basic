@@ -6,7 +6,7 @@ const AdminNewProduct = () => {
         <section className="main-container">
             AdminNewProduct
 
-          <ProductForm btn={"Add"} text={"new"}/>
+          <ProductForm btn={"Add"} text={"new"} nav={'/admin/products/1/title/asc'}/>
         </section>
     );
 };

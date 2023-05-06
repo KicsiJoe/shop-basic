@@ -1,0 +1,93 @@
+{
+  "products": {
+    "-NUYnybWOxvchz2BxGpC": {
+      "item-number": "123124124",
+      "price": "450",
+      "title": "1"
+    },
+    "-NUYtmpNT8smNXaHABG1": {
+      "item-number": "23412",
+      "price": "234212",
+      "title": "2"
+    },
+    "-NUYv6vyMiF9nEPpBsgz": {
+      "item-number": "123",
+      "price": "23232332",
+      "title": "3"
+    },
+    "-NU_WQ2Tepv0muzE7uQt": {
+      "item-number": "56312765421",
+      "price": "7564",
+      "title": "4"
+    },
+    "-NU_WQ_BhwQvP5Ym3OX6": {
+      "item-number": "56312765421",
+      "price": "7564",
+      "title": "5"
+    },
+    "-NU_WWNwAomdBjPvyMq5": {
+      "item-number": "3123",
+      "price": "12321",
+      "title": "6"
+    },
+    "-NUa2LtRpaNlArET0Xpm": {
+      "item-number": "7-jzgedwe",
+      "price": "876",
+      "title": "7"
+    },
+    "-NUa2SIIdQaox4dtj7Sp": {
+      "item-number": "8-hjasigfdgugzwe",
+      "price": "423",
+      "title": "8"
+    },
+    "-NUa2WSOrFAFzhg-AZeP": {
+      "item-number": "9-ljeciwbec",
+      "price": "431234512",
+      "title": "9"
+    },
+    "-NUa2iMo9jHk03GaSleV": {
+      "item-number": "10-ljeciwbksjdec",
+      "price": "512",
+      "title": "10"
+    },
+    "-NUa2jzk7dUFp4ujKcwf": {
+      "item-number": "11-ljeciwbksjdec",
+      "price": "87263",
+      "title": "11"
+    },
+    "-NUa2neH0z2dwzInYq6l": {
+      "item-number": "12-ljlksdnlésdmec",
+      "price": "343",
+      "title": "12"
+    },
+    "-NUaLcID3xv0Mfo8mAQ6": {
+      "item-number": "13 - oihqoiwehf",
+      "price": "886723",
+      "title": "13"
+    },
+    "-NUb7n_FF04errSDUw2C": {
+      "item-number": "14 lksdnfd",
+      "price": "7865",
+      "title": "14"
+    },
+    "-NUb9AbkhqYzEKWAeSI1": {
+      "item-number": "15  jgfkwle",
+      "price": "6423",
+      "title": "15"
+    }
+  },
+  "users": {
+    "nGoXrPxapVV390jxa7rUjfPzIn83": {
+      "authId": "nGoXrPxapVV390jxa7rUjfPzIn83",
+      "email": "admin@gmail.com",
+      "role": "admin",
+      "userName": "AdminKing"
+    },
+    "rtlpjDncu6RjCBHF3pbt9xce9OS2": {
+      "authId": "rtlpjDncu6RjCBHF3pbt9xce9OS2",
+      "email": "teszt@teszt.hu",
+      "role": "user",
+      "userName": "teszt"
+    }
+  }
+}

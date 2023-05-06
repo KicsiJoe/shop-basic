@@ -26,7 +26,6 @@ const Account = () => {
   const { loggedIn, setLoggedIn } = useContext(AuthContext);
   const [loginInputs, setLoginInputs] = useState(basicForm);
   useEffect(()=>{
-    console.log(loggedIn);
     if(loggedIn?.role == "admin") {
       return navigate("/admin")
     }

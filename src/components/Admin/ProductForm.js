@@ -1,12 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
 import { addNewProductService, editProducService } from '../../services/admin-service';
+import { useNavigate } from 'react-router-dom';
 
 
 
-const ProductForm = ({btn, text}) => {
+const ProductForm = ({btn, text, nav}) => {
     const basicInputs = {title:"", price:"", "item-number": ""}
     const [inputs, setInputs]=useState(basicInputs)
+    const navigate = useNavigate()
     return (
         <form onSubmit={(e) => submit(e)}>
        
@@ -53,7 +55,7 @@ const ProductForm = ({btn, text}) => {
 
     function submit(e){
         e.preventDefault()
-        text == "new" ? addNewProductService(inputs) : editProducService(inputs)
+        text == "new" ? addNewProductService(inputs).then(res=> navigate(nav)) : editProducService(inputs)
   
 
     }

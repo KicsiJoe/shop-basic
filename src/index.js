@@ -40,7 +40,7 @@ const router = createBrowserRouter([
       { path: "/cart", element: <Cart /> },
       { path: "/account", element: <Account /> },
       { path: "/admin", element: <AuthAdmin><Admin /> </AuthAdmin>},
-      { path: "/admin/products", element: <AuthAdmin><AdminProductsList /> </AuthAdmin>},
+      { path: "/admin/products/:pageId/:sortBy/:sortType", element: <AuthAdmin><AdminProductsList /> </AuthAdmin>},
       { path: "/admin/new-product", element: <AuthAdmin><AdminNewProduct /> </AuthAdmin>},
       { path: "/admin/product/edit/:productId", element: <AuthAdmin><AdminEditProduct /> </AuthAdmin>},
       { path: "/admin/product/del/:productId", element: <AuthAdmin><AdminDelProduct /> </AuthAdmin>},

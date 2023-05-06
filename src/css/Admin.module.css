@@ -5,11 +5,12 @@
 }
 
 .table_width_title {
+  /* min-height: 500px; */
+  height: min-content;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-
   gap: 1em;
+  align-content: flex-start;
 }
 
 .title {
@@ -18,24 +19,45 @@
 }
 
 .arrows {
+  margin-top: 20px;
   height: 3em;
   display: flex;
+  gap: 30px;
   flex-direction: row;
-  justify-content: space-around;
+  justify-self: flex-end;
+  justify-content: center;
 }
 
-.arrows div span:nth-child(2){
-    
-   margin-left: 1em;
+.page_id {
+  font-size: 2em;
+}
+
+.arrows div span:nth-child(2) {
+  margin-left: 1em;
 }
 
 .arrows span {
+  cursor: pointer;
   border: 1px solid black;
   border-radius: 5px;
   width: 2em;
   height: 100%;
   display: inline-block;
 }
+.arrows span:hover {
+ 
+ background-color: lightgray;
+ border: 1px solid white;
+}
+
+
+.arrows span.notActive {
+  opacity: 0.2;
+  cursor: default;
+ background-color: white;
+ border: 1px solid black;
+}
+
 .arrows span svg {
   height: 100%;
   width: 100%;
@@ -45,17 +67,61 @@
   height: 100%;
   display: inline-block;
 }
+.arrow_in_filter {
+  margin-left: 5px;
+  height: 100%;
+  width: 1em;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  /* top: 50%; */
+  /* transform: translateY(-25%); */
+}
 
-/* table {
-    width: min(90%, 600px) ;
-} */
+.arrow_in_filter svg,
+.arrow_in_filter svg path {
+  display: block;
+  height: 100%;
+}
+
+
+
+.select {
+text-align: center;
+}
 
 table {
-  width: 70%;
+  min-width: 70%;
   margin: 0 auto;
+  align-self: flex-end;
 }
-table th {
+table tr th {
   border: 2px solid black;
+  /* width: minmax(max-content, 100px); */
+}
+
+table td:nth-child(1) {
+  text-align: center;
+}
+table td:nth-child(3) {
+  text-align: right;
+}
+
+
+.th_box {
+  min-width: 120px;
+  justify-content: center;
+  position: relative;
+}
+
+.th_box span:nth-child(1) {
+  padding: 0 20px;
+  white-space: nowrap;
+}
+.th_box span:nth-child(2) {
+  position: absolute;
+  right: 10px;
+  top: 0;
 }
 
 table > tbody tr:nth-child(even) {
