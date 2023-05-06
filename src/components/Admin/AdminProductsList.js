@@ -21,15 +21,14 @@ const AdminProductsList = () => {
   // console.log({ sortBy });
   // console.log({ sortType });
   let filtered;
-
+  let filteredLength = 0;
   const [productList, setProductList] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(5);
-
-  console.log(itemsPerPage);
+  const [searchingField, setSearchingField] = useState("");
 
   useEffect(() => {
     getProductsList("all").then((res) => setProductList(res));
-  }, [itemsPerPage]);
+  }, [itemsPerPage, searchingField]);
 
   if (productList.length > 0) {
     if (sortType == "asc") {
@@ -43,10 +42,18 @@ const AdminProductsList = () => {
         return b[1][sortBy] - a[1][sortBy];
       });
     }
+
     let from = (pageId - 1) * itemsPerPage;
     let to = Number(from) + Number(itemsPerPage);
-    filtered = Array.from(productList);
 
+    filtered = Array.from(productList);
+    filteredLength = filtered.length;
+    if (searchingField != "") {
+      filtered = filtered.filter((arr) =>
+        arr[1].title.includes(searchingField) || arr[1]["item-number"].includes(searchingField) || arr[1].price.includes(searchingField)
+      );
+      filteredLength = filtered.length;
+    }
     filtered = filtered.slice(from, to);
   }
 
@@ -55,12 +62,14 @@ const AdminProductsList = () => {
       <div className={style.table_width_title}>
         <h3 className={style.title}>AdminProductsList</h3>
         <div className={style.select}>
-          <label htmlFor="">Item/site: </label>
+          <label htmlFor="">Items/site: </label>
           <select onChange={changeItemPerPage}>
             <option value="5">5</option>
             <option value="9">9</option>
             <option value="12">12</option>
           </select>
+          <label htmlFor="">Searching: </label>
+          <input type="text" value={searchingField} onChange={searching} />
         </div>
         <table>
           <thead>
@@ -117,16 +126,20 @@ const AdminProductsList = () => {
 
       <div className={style.arrows}>
         <div>
-          <span className={ syleClass("-")}  onClick={() => move("--")}>
+          <span className={syleClass("-")} onClick={() => move("--")}>
             {doubleLeft}
           </span>
-          <span className={ syleClass("-")}  onClick={() => move("-1")}>{left}</span>
+          <span className={syleClass("-")} onClick={() => move("-1")}>
+            {left}
+          </span>
         </div>
 
         <div className={style.page_id}>{pageId}</div>
         <div>
-          <span className={ syleClass("+")} onClick={() => move("+1")}>{right}</span>
-          <span className={ syleClass("+")} onClick={() => move("++")}>
+          <span className={syleClass("+")} onClick={() => move("+1")}>
+            {right}
+          </span>
+          <span className={syleClass("+")} onClick={() => move("++")}>
             {doubleRight}
           </span>
         </div>
@@ -135,13 +148,16 @@ const AdminProductsList = () => {
   );
 
   function syleClass(where) {
-
-    let maxPageNumber = Math.ceil(productList.length / itemsPerPage);
-  return ((where == "+") && (pageId == maxPageNumber)) ? style.notActive :  ((where == "-") && (pageId == 1)) ? style.notActive : ""
+    let maxPageNumber = Math.ceil(filteredLength / itemsPerPage);
+    return where == "+" && pageId == maxPageNumber
+      ? style.notActive
+      : where == "-" && pageId == 1
+      ? style.notActive
+      : "";
   }
 
   function move(where) {
-    let maxPageNumber = Math.ceil(productList.length / itemsPerPage);
+    let maxPageNumber = Math.ceil(filteredLength / itemsPerPage);
     // console.log(maxPageNumber);
     if (where == "--")
       return navigate(`/admin/products/1/${sortBy}/${sortType}`);
@@ -175,8 +191,13 @@ const AdminProductsList = () => {
   }
 
   function changeItemPerPage(e) {
-    setItemsPerPage((prev) => e.target.value);
+    setItemsPerPage(e.target.value);
 
+    return navigate(`/admin/products/1/${sortBy}/${sortType}`);
+  }
+
+  function searching(e) {
+    setSearchingField(e.target.value);
     return navigate(`/admin/products/1/${sortBy}/${sortType}`);
   }
 };
