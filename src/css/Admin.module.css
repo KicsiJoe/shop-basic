@@ -114,6 +114,10 @@ table td:nth-child(3) {
   text-align: right;
 }
 
+.delete_ques{
+  text-align: center;
+  color: red;
+}
 
 .th_box {
   min-width: 120px;

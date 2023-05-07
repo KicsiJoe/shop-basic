@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getProductsList } from "../../services/admin-service";
+import { getProductsData } from "../../services/admin-service";
 import style from "../../css/Admin.module.css";
 import { v4 as uuid } from "uuid";
 import {
@@ -23,11 +23,11 @@ const AdminProductsList = () => {
   let filtered;
   let filteredLength = 0;
   const [productList, setProductList] = useState([]);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(12);
   const [searchingField, setSearchingField] = useState("");
 
   useEffect(() => {
-    getProductsList("all").then((res) => setProductList(res));
+    getProductsData("all").then((res) => setProductList(res));
   }, [itemsPerPage, searchingField]);
 
   if (productList.length > 0) {
@@ -63,10 +63,10 @@ const AdminProductsList = () => {
         <h3 className={style.title}>AdminProductsList</h3>
         <div className={style.select}>
           <label htmlFor="">Items/site: </label>
-          <select onChange={changeItemPerPage}>
+          <select defaultValue={12} onChange={changeItemPerPage}>
             <option value="5">5</option>
             <option value="9">9</option>
-            <option value="12">12</option>
+            <option value="12" >12</option>
           </select>
           <label htmlFor="">Searching: </label>
           <input type="text" value={searchingField} onChange={searching} />
