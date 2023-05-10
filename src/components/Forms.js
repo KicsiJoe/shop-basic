@@ -1,24 +1,32 @@
 import React from "react";
 import {
   getUserInfo,
-  loginUserService,
-  registerUser,
+  loginService,
+  registerService,
   saveUserToFirebase,
 } from "../services/user-services";
 import { AuthContext } from "../contexts/AuthContext";
 import { useContext } from "react";
-
 import { useNavigate } from "react-router-dom";
+import style from "../css/Forms.module.css";
 
 const Forms = ({ setLoginInputs, loginInputs, basicForm, func, title }) => {
+
   const navigate = useNavigate();
   const { loggedIn, setLoggedIn } = useContext(AuthContext);
   return (
     <div>
-      <div>{title}</div>
+      <h4 className={style.title}>{title}</h4>
       <form onSubmit={(e) => submit(e, func)}>
         {func == "signUp" ? (
           <div>
+            <label htmlFor="company">Company registration</label>
+            <input
+              type="checkbox"
+              id="company"
+              checked={loginInputs[func].company}
+              onChange={inputChkbox}
+            />
             <p>
               <label htmlFor="username">Username: </label>
             </p>
@@ -61,6 +69,12 @@ const Forms = ({ setLoginInputs, loginInputs, basicForm, func, title }) => {
       </form>
     </div>
   );
+  function inputChkbox() {
+    setLoginInputs({
+      signUp: { ...loginInputs.signUp, company: !loginInputs[func].company },
+      logIn: { ...loginInputs.logIn },
+    });
+  }
   function inputEmail(e) {
     func == "signUp"
       ? setLoginInputs({
@@ -92,19 +106,23 @@ const Forms = ({ setLoginInputs, loginInputs, basicForm, func, title }) => {
 
   function submit(e, func) {
     e.preventDefault();
+    let role = loginInputs.signUp.company ? "company" : "user";
+
     func == "signUp"
-      ? registerUser(loginInputs.signUp).then((res) =>
+      ? registerService(loginInputs.signUp).then((res) =>
           res.localId
             ? saveUserToFirebase(
                 loginInputs.signUp.userName,
                 res.localId,
-                res.email
+                res.email,
+                loginInputs.signUp.company,
+                role
               )
                 .then((res) => setLoggedIn(res))
                 .then((res) => setLoginInputs(basicForm))
             : alert("Nem sikerult a mentes!")
         )
-      : loginUserService(loginInputs.logIn.email, loginInputs.logIn.pwd)
+      : loginService(loginInputs.logIn.email, loginInputs.logIn.pwd)
           .then((res) => getUserInfo(res.localId))
           .then((res) => setLoggedIn(res))
           .then((res) => {
