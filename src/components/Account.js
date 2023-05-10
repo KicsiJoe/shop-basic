@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 
+
 const Account = () => {
 
   const navigate = useNavigate()
@@ -17,6 +18,7 @@ const Account = () => {
       userName: "",
       email: "",
       pwd: "",
+      company: false
     },
     logIn: {
       email: "",

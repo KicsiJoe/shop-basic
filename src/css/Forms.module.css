@@ -20,6 +20,10 @@
   width: 13em;
 }
 
+#file {
+    padding: 0;
+}
+
 .form input {
   box-sizing: border-box;
   margin: 0;
@@ -29,6 +33,16 @@
   appearance: textfield;
   padding: 5px 10px;
 }
+
+.form input:focus {
+  outline: none;
+}
+
+.title {
+  text-align: center;
+  text-decoration: underline wavy;
+}
+
 /* PLACEHOLDER EDIT: */
 /* ::placeholder {
   text-align: left;

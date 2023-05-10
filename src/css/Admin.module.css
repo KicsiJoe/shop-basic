@@ -45,17 +45,15 @@
   display: inline-block;
 }
 .arrows span:hover {
- 
- background-color: lightgray;
- border: 1px solid white;
+  background-color: lightgray;
+  border: 1px solid white;
 }
-
 
 .arrows span.notActive {
   opacity: 0.2;
   cursor: default;
- background-color: white;
- border: 1px solid black;
+  background-color: white;
+  border: 1px solid black;
 }
 
 .arrows span svg {
@@ -84,18 +82,15 @@
   height: 100%;
 }
 
-
-
 .select {
-text-align: center;
+  text-align: center;
 }
 
-.select label{
+.select label {
   display: inline-block;
   margin-left: 1em;
   margin-right: 0.5em;
 }
-
 
 table {
   min-width: 70%;
@@ -107,16 +102,41 @@ table tr th {
   /* width: minmax(max-content, 100px); */
 }
 
-table td:nth-child(1),table td:nth-child(4)  {
+table td:nth-child(1),
+table td:nth-child(4) {
   text-align: center;
 }
 table td:nth-child(3) {
   text-align: right;
 }
 
-.delete_ques{
+.delete_ques {
   text-align: center;
   color: red;
+}
+
+.del_icon {
+  display: flex;
+  height: 100%;
+}
+
+.del_icon svg {
+  height: width;
+}
+
+.links_box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.links_box a,
+.links_box svg {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
 }
 
 .th_box {

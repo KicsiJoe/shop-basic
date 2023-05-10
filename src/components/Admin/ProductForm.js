@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import {
   addNewProductService,
   delProductService,
   editProductService,
+  prevPicSetterLoader,
 } from "../../services/admin-service";
 import { useNavigate } from "react-router-dom";
 import style from "../../css/Forms.module.css";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+} from "firebase/storage";
+import { app } from "../../repositories/firebase";
+import { v4 as uuid } from "uuid";
 
 const ProductForm = ({ btn, text, nav, data, productId }) => {
   let basicInputs = { title: "", price: "", "item-number": "" };
@@ -20,6 +30,23 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
   }
 
   const [inputs, setInputs] = useState(basicInputs);
+  const [fileData, setFileData] = useState(null);
+  const [uploadedUrlWithId, setUploadedUrlWithId] = useState(null);
+
+  useEffect(() => {
+    if (fileData != null) {
+      const picUid = uuid();
+      prevPicSetterLoader(
+        fileData,
+        picUid,
+        getStorage,
+        ref,
+        uploadBytes,
+        getDownloadURL,
+        setUploadedUrlWithId
+      );
+    }
+  }, [fileData]);
 
   const navigate = useNavigate();
 
@@ -35,6 +62,7 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
           id="title"
           value={inputs.title}
           onChange={inputTitle}
+          readOnly={text == "delete" ? true : false}
         />
       </div>
       <div>
@@ -47,6 +75,7 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
           id="item-number"
           value={inputs["item-number"]}
           onChange={inputNumber}
+          readOnly={text == "delete" ? true : false}
         />
       </div>
       <div>
@@ -59,8 +88,31 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
           id="price"
           value={inputs.price}
           onChange={inputPrice}
+          readOnly={text == "delete" ? true : false}
         />
       </div>
+      {text != "delete" ? (
+        <div>
+          <p>
+            <label htmlFor="file">Picture upload: </label>
+          </p>
+          <input
+            accept="image/x-png,image/gif,image/jpeg, image/avif, image/webp"
+            type="file"
+            id={style.file}
+            onChange={inputPic}
+            readOnly={text == "delete" ? true : false}
+          />
+          {uploadedUrlWithId?.url && (
+            <div>
+              <img src={uploadedUrlWithId.url} alt="" />
+            </div>
+          )}
+        </div>
+      ) : (
+        ""
+      )}
+
       <p className={style.btns}>
         <button>{btn}</button>
         <button onClick={() => navigate("/admin/products/1/title/asc")}>
@@ -88,6 +140,11 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
   }
   function inputNumber(e) {
     setInputs({ ...inputs, "item-number": e.target.value });
+  }
+
+  function inputPic(ev) {
+    console.log(ev.target.files[0]);
+    setFileData(ev.target.files[0]);
   }
 };
 

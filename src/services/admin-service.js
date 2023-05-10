@@ -2,6 +2,7 @@ import {
   addNewProductFirebase,
   delProductServiceFirebase,
   editProductServiceFirebase,
+  prevPicSetterLoaderFirebase,
 } from "../repositories/admin";
 import { getProducts } from "../repositories/getProduct";
 
@@ -22,3 +23,8 @@ export const getProductsData = (what) => {
     return getProducts(what);
   }
 };
+
+export const prevPicSetterLoader=(fileData,picUid, getStorage,ref,uploadBytes,getDownloadURL, setUploadedUrlWithId )=>{
+  const fileExtension = fileData.name.split('.').at(-1);
+  return prevPicSetterLoaderFirebase(fileData,fileExtension ,picUid, getStorage,ref,uploadBytes,getDownloadURL, setUploadedUrlWithId )
+ }

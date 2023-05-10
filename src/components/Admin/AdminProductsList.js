@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getProductsData } from "../../services/admin-service";
+import { delProductService, getProductsData } from "../../services/admin-service";
 import style from "../../css/Admin.module.css";
 import { v4 as uuid } from "uuid";
 import {
@@ -10,6 +10,7 @@ import {
   right,
   arrow_down_filter,
   arrow_up_filter,
+  delete_icon
 } from "../../icon/icons.js";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -25,10 +26,11 @@ const AdminProductsList = () => {
   const [productList, setProductList] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [searchingField, setSearchingField] = useState("");
+  const [pushed, setPushed] = useState(false);
 
   useEffect(() => {
     getProductsData("all").then((res) => setProductList(res));
-  }, [itemsPerPage, searchingField]);
+  }, [itemsPerPage, searchingField, pushed]);
 
   if (productList.length > 0) {
     if (sortType == "asc") {
@@ -114,9 +116,10 @@ const AdminProductsList = () => {
                 <td>
                   <span>{arr[1].price}</span> <span>EUR</span>
                 </td>
-                <td>
+                <td className={style.links_box}>
                   <Link to={`/admin/product/edit/${arr[0]}`}>Edit</Link> |
-                  <Link to={`/admin/product/del/${arr[0]}`}>Delete</Link>
+                  <Link to={`/admin/product/del/${arr[0]}`}>Delete</Link> |
+                  <span onClick={()=> delProductService(arr[0]).then(res=> setPushed(prev => !prev))} className={style.del_icon}>{delete_icon}</span>
                 </td>
               </tr>
             ))}

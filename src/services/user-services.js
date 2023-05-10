@@ -3,14 +3,14 @@ import { getUserInfoFirebase, loginUserFirebase, registerUserToFirebase } from "
 import { getProducts } from "../repositories/getProduct";
 import { saveNewUserToFirebase } from "../repositories/registration";
 
-export const saveUserToFirebase = (userName, localId, email) => {
-  return saveNewUserToFirebase(userName, localId, email);
+export const saveUserToFirebase = (userName, localId, email,company, role) => {
+  return saveNewUserToFirebase(userName, localId, email,company, role);
 };
 
-export const registerUser = (loginInputs) => {
+export const registerService = (loginInputs) => {
   return registerUserToFirebase(loginInputs);
 };
-export const loginUserService = (email, pwd) => {
+export const loginService = (email, pwd) => {
   return loginUserFirebase(email, pwd);
 };
 
