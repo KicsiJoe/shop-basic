@@ -19,4 +19,7 @@ body {
 section.main-container {
   margin: 0 50px;
 }
+section.main-container-app {
+  background-color: red;
+}
 

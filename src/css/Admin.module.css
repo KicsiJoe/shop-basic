@@ -120,11 +120,29 @@ table td:nth-child(3) {
   height: 100%;
 }
 
-.del_icon svg {
-  height: width;
+.pic_indicator > * , .pic_indicator {
+  cursor: default;
+display: inline-block;
+
+
+
+}
+
+.pic_indicator {
+  position: absolute;
+  right: 0;
+  width: 1.2em;
+  height: 1.2em;
+  opacity: 0.4;
+
+}
+
+.pic_indicator svg, .pic_indicator svg path  {
+  cursor: default !important;
 }
 
 .links_box {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;

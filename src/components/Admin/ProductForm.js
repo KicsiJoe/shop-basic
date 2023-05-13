@@ -1,54 +1,105 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useState } from "react";
 import {
   addNewProductService,
   delProductService,
+  delUselessPic,
+  downloadPicsRefs,
   editProductService,
   prevPicSetterLoader,
 } from "../../services/admin-service";
 import { useNavigate } from "react-router-dom";
 import style from "../../css/Forms.module.css";
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  listAll,
-} from "firebase/storage";
-import { app } from "../../repositories/firebase";
+
 import { v4 as uuid } from "uuid";
+import { AuthContext } from "../../contexts/AuthContext";
+import { getOnePicUrl } from "../../services/utilities";
+
+
+
+ export const NO_IMG =   "https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FnoImg%2Fno_image.png?alt=media&token=a4dc5986-5d73-4fb7-b4c3-52de9cda1136";
 
 const ProductForm = ({ btn, text, nav, data, productId }) => {
-  let basicInputs = { title: "", price: "", "item-number": "" };
+  
+  // let [img_static, setImgStatic] = useState("")
+
+//  let NO_IMG = 'https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FnoImg%2Fno_image.png?alt=media&token=a4dc5986-5d73-4fb7-b4c3-52de9cda1136';
+  
+  // useEffect(() => {
+  //  NO_IMG =getOnePicUrl("no_image.png", "images/noImg").then(
+  //     (res) => setImgStatic(res)
+  //   );
+  // }, []);
+  // console.log(img_static);
+console.log({text});
+  const { loggedIn } = useContext(AuthContext);
+  let basicInputs;
+  if (text == "new") {
+    const picUid = uuid();
+    basicInputs = {
+      title: "",
+      price: "",
+      "item-number": "",
+      pic: {
+        picUrl:  NO_IMG ,
+        picUid: picUid,
+        picName: "no_image.png",
+      },
+      authId: loggedIn.authId,
+    };
+    console.log(basicInputs);
+  }
 
   if (Object.keys(data).length > 0) {
+    console.log("regi data hasznalat");
     basicInputs = {
       title: data.title,
       price: data.price,
       "item-number": data["item-number"],
+      pic: {
+        picUrl: data.pic.picUrl,
+        picUid: data.pic.picUid,
+        picName: data.pic.picName,
+      },
+      authId: data.authId,
     };
+
   }
 
+  const picUidOld = data?.pic?.picUid;
+  const picUrlOld = data?.pic?.picUrl;
+
   const [inputs, setInputs] = useState(basicInputs);
+  console.log(inputs);
   const [fileData, setFileData] = useState(null);
-  const [uploadedUrlWithId, setUploadedUrlWithId] = useState(null);
+  const [images, setImages] = useState([]);
+  const [newPicDownloadToSee, setNewPicDownloadToSee] = useState(true);
+  const navigate = useNavigate();
+
+  console.log(images);
 
   useEffect(() => {
-    if (fileData != null) {
-      const picUid = uuid();
+    console.log("kep betoltese, ha valasztottunk");
+    if (fileData != null)
       prevPicSetterLoader(
         fileData,
-        picUid,
-        getStorage,
-        ref,
-        uploadBytes,
-        getDownloadURL,
-        setUploadedUrlWithId
-      );
-    }
+        inputs.pic.picUid,
+        setInputs,
+        inputs,
+        loggedIn.authId,
+        productId
+      ).then((res) =>{ 
+        console.log(res)
+        return setNewPicDownloadToSee((prev) => !prev)});
   }, [fileData]);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (inputs.pic?.picUrl) {
+      downloadPicsRefs(inputs.authId, productId).then((res) => {
+        return setImages(res);
+      });
+    }
+  }, [fileData, newPicDownloadToSee]);
 
   return (
     <form className={style.form} onSubmit={(e) => submit(e)}>
@@ -103,9 +154,9 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
             onChange={inputPic}
             readOnly={text == "delete" ? true : false}
           />
-          {uploadedUrlWithId?.url && (
+          {inputs?.pic.picUrl && (
             <div>
-              <img src={uploadedUrlWithId.url} alt="" />
+              <img src={inputs?.pic.picUrl} alt="" />
             </div>
           )}
         </div>
@@ -115,9 +166,7 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
 
       <p className={style.btns}>
         <button>{btn}</button>
-        <button onClick={() => navigate("/admin/products/1/title/asc")}>
-          Cancel
-        </button>
+        <button onClick={(e) => cancelBtn(e)}>Cancel</button>
       </p>
     </form>
   );
@@ -125,7 +174,11 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
   function submit(e) {
     e.preventDefault();
     if (text == "new")
-      return addNewProductService(inputs).then((res) => navigate(nav));
+      return addNewProductService(inputs)
+        .then((res) => navigate(nav))
+        .catch(function (e) {
+          alert(e);
+        });
     if (text == "edit")
       return editProductService(inputs, productId).then((res) => navigate(nav));
     if (text == "delete")
@@ -142,9 +195,24 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
     setInputs({ ...inputs, "item-number": e.target.value });
   }
 
-  function inputPic(ev) {
-    console.log(ev.target.files[0]);
-    setFileData(ev.target.files[0]);
+  function inputPic(e) {
+    console.log(e.target.files[0]);
+    setFileData(e.target.files[0]);
+  }
+
+  function cancelBtn(e) {
+    e.preventDefault();
+    console.log({ inputs });
+
+    if (
+      inputs.picUrl != undefined &&
+      inputs.picUrl != picUrlOld &&
+      fileData.name != undefined
+    ) {
+      console.log("inputs " + { inputs });
+      delUselessPic(data.authId, inputs, picUrlOld, productId, fileData);
+    }
+    navigate("/admin/products/1/title/asc");
   }
 };
 

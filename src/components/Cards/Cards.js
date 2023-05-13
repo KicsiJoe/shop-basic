@@ -8,9 +8,17 @@ import { v4 as uuid} from 'uuid'
 
 const Cards = () => {
   const [productsList, setProductsList] = useState([])
-  
+  console.log(productsList);
   useEffect(()=>{
-    getProduct("all").then(res=> setProductsList(Object.entries(res)))
+    getProduct("all").then(res => {
+      if(res != null){
+        setProductsList(Object.entries(res))
+      } else {
+        setProductsList([])
+      }
+
+    
+    })
   }, [])
   
   // console.log(productsList);

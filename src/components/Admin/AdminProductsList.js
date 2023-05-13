@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { delProductService, getProductsData } from "../../services/admin-service";
+import {
+  delProductService,
+  getProductsData,
+} from "../../services/admin-service";
 import style from "../../css/Admin.module.css";
 import { v4 as uuid } from "uuid";
 import {
@@ -10,7 +13,8 @@ import {
   right,
   arrow_down_filter,
   arrow_up_filter,
-  delete_icon
+  delete_icon,
+  with_img,
 } from "../../icon/icons.js";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -27,9 +31,15 @@ const AdminProductsList = () => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [searchingField, setSearchingField] = useState("");
   const [pushed, setPushed] = useState(false);
-
+  console.log(productList);
   useEffect(() => {
-    getProductsData("all").then((res) => setProductList(res));
+    getProductsData("all").then((res) => {
+      if (res.length > 0 ) {
+        return setProductList(res);
+      } else {
+       return setProductList([]);
+      }
+    });
   }, [itemsPerPage, searchingField, pushed]);
 
   if (productList.length > 0) {
@@ -51,8 +61,11 @@ const AdminProductsList = () => {
     filtered = Array.from(productList);
     filteredLength = filtered.length;
     if (searchingField != "") {
-      filtered = filtered.filter((arr) =>
-        arr[1].title.includes(searchingField) || arr[1]["item-number"].includes(searchingField) || arr[1].price.includes(searchingField)
+      filtered = filtered.filter(
+        (arr) =>
+          arr[1].title.includes(searchingField) ||
+          arr[1]["item-number"].includes(searchingField) ||
+          arr[1].price.includes(searchingField)
       );
       filteredLength = filtered.length;
     }
@@ -68,7 +81,7 @@ const AdminProductsList = () => {
           <select defaultValue={12} onChange={changeItemPerPage}>
             <option value="5">5</option>
             <option value="9">9</option>
-            <option value="12" >12</option>
+            <option value="12">12</option>
           </select>
           <label htmlFor="">Searching: </label>
           <input type="text" value={searchingField} onChange={searching} />
@@ -117,9 +130,23 @@ const AdminProductsList = () => {
                   <span>{arr[1].price}</span> <span>EUR</span>
                 </td>
                 <td className={style.links_box}>
+                  {arr[1].pic.picUrl && arr[1].pic.picName != "no_image.png"? (
+                    <span className={style.pic_indicator}>{with_img}</span>
+                  ) : (
+                    ""
+                  )}
                   <Link to={`/admin/product/edit/${arr[0]}`}>Edit</Link> |
                   <Link to={`/admin/product/del/${arr[0]}`}>Delete</Link> |
-                  <span onClick={()=> delProductService(arr[0]).then(res=> setPushed(prev => !prev))} className={style.del_icon}>{delete_icon}</span>
+                  <span
+                    onClick={() =>
+                      delProductService(arr[0]).then((res) =>
+                        setPushed((prev) => !prev)
+                      )
+                    }
+                    className={style.del_icon}
+                  >
+                    {delete_icon}
+                  </span>
                 </td>
               </tr>
             ))}
@@ -151,17 +178,22 @@ const AdminProductsList = () => {
   );
 
   function syleClass(where) {
+
     let maxPageNumber = Math.ceil(filteredLength / itemsPerPage);
-    return where == "+" && pageId == maxPageNumber
-      ? style.notActive
-      : where == "-" && pageId == 1
-      ? style.notActive
-      : "";
+    if(maxPageNumber != 0){
+      return where == "+" && pageId == maxPageNumber
+        ? style.notActive
+        : where == "-" && pageId == 1 
+        ? style.notActive
+        : "";
+    } else {
+      return style.notActive
+    }
   }
 
   function move(where) {
     let maxPageNumber = Math.ceil(filteredLength / itemsPerPage);
-    // console.log(maxPageNumber);
+    console.log(maxPageNumber);
     if (where == "--")
       return navigate(`/admin/products/1/${sortBy}/${sortType}`);
 
@@ -171,8 +203,15 @@ const AdminProductsList = () => {
     if (where == "+1" && +pageId < maxPageNumber)
       return navigate(`/admin/products/${+pageId + 1}/${sortBy}/${sortType}`);
 
-    if (where == "++")
+    if (where == "++") {
+      if(maxPageNumber == 0){
+        maxPageNumber = 1
+      } 
+
+
       return navigate(`/admin/products/${maxPageNumber}/${sortBy}/${sortType}`);
+
+    }
   }
 
   function arrow_status(where) {

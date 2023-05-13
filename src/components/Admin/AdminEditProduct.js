@@ -9,6 +9,7 @@ const AdminEditProduct = () => {
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
+    console.log(productId);
     getProductsData(productId).then((res) => setProduct(res));
   }, []);
   return (
