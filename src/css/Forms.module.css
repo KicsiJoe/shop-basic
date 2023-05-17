@@ -43,6 +43,14 @@
   text-decoration: underline wavy;
 }
 
+/* .file_input::file-selector-button {
+  
+} */
+
+.file_input_inactive {
+  border: none;
+  opacity: 0.3;
+}
 /* PLACEHOLDER EDIT: */
 /* ::placeholder {
   text-align: left;

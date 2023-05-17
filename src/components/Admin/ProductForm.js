@@ -6,51 +6,39 @@ import {
   delUselessPic,
   downloadPicsRefs,
   editProductService,
-  prevPicSetterLoader,
+  updateItem,
 } from "../../services/admin-service";
 import { useNavigate } from "react-router-dom";
 import style from "../../css/Forms.module.css";
 
 import { v4 as uuid } from "uuid";
 import { AuthContext } from "../../contexts/AuthContext";
-import { getOnePicUrl } from "../../services/utilities";
+import { checkInputs, getOnePicUrl, savePic } from "../../services/utilities";
+import { delUselessPics, prevPicSetterLoader } from "../../services/pic-service";
 
-
-
- export const NO_IMG =   "https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FnoImg%2Fno_image.png?alt=media&token=a4dc5986-5d73-4fb7-b4c3-52de9cda1136";
+export const NO_IMG =
+  "https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FnoImg%2Fno_image.png?alt=media&token=a4dc5986-5d73-4fb7-b4c3-52de9cda1136";
 
 const ProductForm = ({ btn, text, nav, data, productId }) => {
-  
-  // let [img_static, setImgStatic] = useState("")
 
-//  let NO_IMG = 'https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FnoImg%2Fno_image.png?alt=media&token=a4dc5986-5d73-4fb7-b4c3-52de9cda1136';
-  
-  // useEffect(() => {
-  //  NO_IMG =getOnePicUrl("no_image.png", "images/noImg").then(
-  //     (res) => setImgStatic(res)
-  //   );
-  // }, []);
-  // console.log(img_static);
-console.log({text});
+  console.log(data);
   const { loggedIn } = useContext(AuthContext);
+
   let basicInputs;
   if (text == "new") {
-    const picUid = uuid();
     basicInputs = {
       title: "",
       price: "",
       "item-number": "",
       pic: {
-        picUrl:  NO_IMG ,
-        picUid: picUid,
+        picUrl: NO_IMG,
         picName: "no_image.png",
       },
       authId: loggedIn.authId,
     };
-    console.log(basicInputs);
   }
 
-  if (Object.keys(data).length > 0) {
+  if (Object.keys(data).length > 0 && text != "new") {
     console.log("regi data hasznalat");
     basicInputs = {
       title: data.title,
@@ -58,48 +46,59 @@ console.log({text});
       "item-number": data["item-number"],
       pic: {
         picUrl: data.pic.picUrl,
-        picUid: data.pic.picUid,
         picName: data.pic.picName,
       },
       authId: data.authId,
     };
-
   }
 
-  const picUidOld = data?.pic?.picUid;
-  const picUrlOld = data?.pic?.picUrl;
-
+  // MEGLEVO KEPET IDE MENTI AZ ELSO BETOLTESNEL, VAGY UJ INDITASNAL ALAP KEPET AD HOZZA
   const [inputs, setInputs] = useState(basicInputs);
-  console.log(inputs);
-  const [fileData, setFileData] = useState(null);
+console.log({inputs});
+  //INPUT RANYOMASKOR IDE MENT:
+  const [newImage, setNewImage] = useState(null);
+  console.log(newImage);
+  // A TEST MAPPABA MENTI AZ UJ IMG OBJECTET:
+  const [imageInput, setImageInput] = useState({
+    picUrl: null,
+    picName: null,
+    file: null,
+    map: null,
+    filesInMap: []
+  });
+  // console.clear()
+
+  console.log(imageInput);
+  // const [fileData, setFileData] = useState(null);
   const [images, setImages] = useState([]);
+  //OLDALFRISSITESHEZ KELL:
   const [newPicDownloadToSee, setNewPicDownloadToSee] = useState(true);
+
   const navigate = useNavigate();
 
-  console.log(images);
-
   useEffect(() => {
-    console.log("kep betoltese, ha valasztottunk");
-    if (fileData != null)
-      prevPicSetterLoader(
-        fileData,
-        inputs.pic.picUid,
-        setInputs,
-        inputs,
-        loggedIn.authId,
-        productId
-      ).then((res) =>{ 
-        console.log(res)
-        return setNewPicDownloadToSee((prev) => !prev)});
-  }, [fileData]);
-
-  useEffect(() => {
-    if (inputs.pic?.picUrl) {
-      downloadPicsRefs(inputs.authId, productId).then((res) => {
-        return setImages(res);
-      });
+    if (newImage != null) {
+      console.clear();
+      console.log(productId);
+      console.log(inputs);
+      console.log(newImage);
+      prevPicSetterLoader(newImage, inputs, setImageInput, productId).then(
+        (res) => {
+          console.log("valasztottunk kepet");
+          return setNewPicDownloadToSee((prev) => !prev);
+        }
+      );
     }
-  }, [fileData, newPicDownloadToSee]);
+  }, [newImage]);
+
+  // useEffect(() => {
+  //   if (imageInput?.picUrl) {
+  //     console.log("van az imageInput.picUrl?" );
+  //     downloadPicsRefs(inputs.authId, productId).then((res) => {
+  //       return setImages(res);
+  //     });
+  //   }
+  // }, [newImagePreview, newPicDownloadToSee]);
 
   return (
     <form className={style.form} onSubmit={(e) => submit(e)}>
@@ -142,27 +141,40 @@ console.log({text});
           readOnly={text == "delete" ? true : false}
         />
       </div>
-      {text != "delete" ? (
-        <div>
-          <p>
-            <label htmlFor="file">Picture upload: </label>
-          </p>
-          <input
-            accept="image/x-png,image/gif,image/jpeg, image/avif, image/webp"
-            type="file"
-            id={style.file}
-            onChange={inputPic}
-            readOnly={text == "delete" ? true : false}
-          />
-          {inputs?.pic.picUrl && (
-            <div>
-              <img src={inputs?.pic.picUrl} alt="" />
-            </div>
-          )}
-        </div>
-      ) : (
-        ""
-      )}
+
+      <div>
+        {text != "delete" ? (
+          <>
+            <p>
+              <label htmlFor="file">Picture upload: </label>
+            </p>
+            <input
+              className={
+                checkInputs(inputs)
+                  ? style.file_input
+                  : (style.file_input, style.file_input_inactive)
+              }
+              disabled={!checkInputs(inputs)}
+              accept="image/x-png,image/gif,image/jpeg, image/avif, image/webp"
+              type="file"
+              id={style.file}
+              onChange={inputPic}
+              readOnly={text == "delete" ? true : false}
+            />
+          </>
+        ) : (
+          ""
+        )}
+        {inputs && imageInput.picUrl == null ? (
+          <div>
+            <img src={inputs?.pic.picUrl} alt="" />
+          </div>
+        ) : (
+          <div>
+            <img src={imageInput.picUrl} alt="" />
+          </div>
+        )}
+      </div>
 
       <p className={style.btns}>
         <button>{btn}</button>
@@ -173,18 +185,52 @@ console.log({text});
 
   function submit(e) {
     e.preventDefault();
-    if (text == "new")
-      return addNewProductService(inputs)
-        .then((res) => navigate(nav))
-        .catch(function (e) {
-          alert(e);
-        });
-    if (text == "edit")
-      return editProductService(inputs, productId).then((res) => navigate(nav));
+    let inputsNew;
+    if (text == "new") {
+      console.log("uj PRODUCT LETREHOZASA");
+      if (newImage == null) {
+        // inputsNew= {...inputs, pic : {picName: newImage.name, picUrl: "" }}
+        inputsNew = { ...inputs };
+        return addNewProductService(inputsNew)
+          .then((res) => navigate(nav))
+          .catch(function (e) {
+            alert(e);
+          });
+      } else {
+        inputsNew = { ...inputs, pic: { picName: newImage.name, picUrl: "" } };
+        console.log(inputsNew);
+        return addNewProductService(inputsNew)
+          .then((res) => savePic(loggedIn.authId, res.name, newImage))
+          .then((res) => updateItem(inputs, res))
+          .then((res) => navigate(nav))
+          .catch(function (e) {
+            alert(e);
+          });
+      }
+    }
+
+    if (text == "edit") {
+      console.log("EDIT PRODUCT");
+      console.log(inputs);
+      console.log(newImage);
+      if (newImage != null) {
+        inputsNew = { ...inputs, pic: { picName: newImage.name, picUrl: "" } };
+        savePic(loggedIn.authId, productId, newImage, inputsNew)
+          .then((res) => updateItem(inputsNew, res))
+          .then((response) => navigate(nav))
+          .catch(function (e) {
+            alert(e);
+          });
+      } else {
+        return editProductService(inputs, productId).then((res) =>
+          navigate(nav)
+        );
+      }
+    }
+
     if (text == "delete")
       return delProductService(productId).then((res) => navigate(nav));
   }
-
   function inputTitle(e) {
     setInputs({ ...inputs, title: e.target.value });
   }
@@ -194,23 +240,18 @@ console.log({text});
   function inputNumber(e) {
     setInputs({ ...inputs, "item-number": e.target.value });
   }
-
   function inputPic(e) {
-    console.log(e.target.files[0]);
-    setFileData(e.target.files[0]);
+    setNewImage(e.target.files[0]);
   }
 
   function cancelBtn(e) {
     e.preventDefault();
-    console.log({ inputs });
+    // console.log(data.authId);
+    // delUselessPic(data.authId, images);
+    // }
+    if(imageInput.picUrl != null){
+      delUselessPics(inputs, imageInput )
 
-    if (
-      inputs.picUrl != undefined &&
-      inputs.picUrl != picUrlOld &&
-      fileData.name != undefined
-    ) {
-      console.log("inputs " + { inputs });
-      delUselessPic(data.authId, inputs, picUrlOld, productId, fileData);
     }
     navigate("/admin/products/1/title/asc");
   }

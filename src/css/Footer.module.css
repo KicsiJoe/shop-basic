@@ -1,9 +1,13 @@
 .footer_container {
-    box-sizing: border-box;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    background-color: #FF2C3E;
-    width: 100%;
-    padding: 0 50px;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #ff2c3e;
+  width: 100%;
+}
+
+.footer_container h1 {
+  padding: 0 50px;
+  font-size: 2em;
 }

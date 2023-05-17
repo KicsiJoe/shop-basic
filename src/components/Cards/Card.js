@@ -6,9 +6,10 @@ const Card = ({cardObj}) => {
  
         return ( 
         <div className={style.card_box}>
-            <h1>{cardObj.title}</h1>
+            <img src={cardObj.pic.picUrl} alt="picture" />
+            <p>{cardObj.title}</p>
             <p>{cardObj.id}</p>
-            <p>{cardObj.price}</p>
+            <p>{cardObj.price} EUR</p>
         </div>
         )
 

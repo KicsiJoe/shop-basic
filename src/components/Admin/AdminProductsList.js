@@ -31,7 +31,7 @@ const AdminProductsList = () => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [searchingField, setSearchingField] = useState("");
   const [pushed, setPushed] = useState(false);
-  console.log(productList);
+  // console.log(productList);
   useEffect(() => {
     getProductsData("all").then((res) => {
       if (res.length > 0 ) {
