@@ -20,5 +20,5 @@ export const getOnePicUrl = (picName, path) => {
 };
 
 export const savePic = (userId, itemId, imageData, inputsNew) => {
-  return savePicFirebase(userId, itemId, imageData);
+  return savePicFirebase(userId, itemId, imageData)
 };

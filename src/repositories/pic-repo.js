@@ -1,4 +1,3 @@
-
 import { app } from "./firebase";
 import {
   getStorage,
@@ -8,7 +7,6 @@ import {
   uploadBytes,
   listAll,
 } from "firebase/storage";
-
 
 export const getOnePicUrlFromFirebase = (picName, path) => {
   console.log(`${path}/${picName}`);
@@ -29,12 +27,11 @@ export const savePicFirebase = (authId, productId, imageData) => {
   console.log("savePicFirebase");
   return uploadBytes(fileRef, imageData).then((uploadResult) => {
     return getDownloadURL(uploadResult?.ref).then((url) => {
+      console.log({ authId, productId, picUrl: url, picName: fileName });
       return { authId, productId, picUrl: url, picName: fileName };
     });
   });
 };
-
-
 
 export const prevPicSetterLoaderFirebase = (
   fileData,
@@ -56,46 +53,52 @@ export const prevPicSetterLoaderFirebase = (
   );
   return uploadBytes(fileRef, fileData).then((uploadResult) => {
     return getDownloadURL(uploadResult?.ref).then((url) => {
-  
       // console.clear()
       // console.log({ picUrl: url, picName: fileName });
-      return { picUrl: url, picName: fileName, file: fileData, map: `${productId}`};
+      return {
+        picUrl: url,
+        picName: fileName,
+        file: fileData,
+        map: `${productId}`,
+      };
     });
   });
 };
 
-export const delUselessPicFirebase = (authId, images) => {
+export const delUselessPicFirebase = (map, onePicName, authId) => {
   const storage = getStorage();
-  images.map((img) => {
-    // console.log(img);
-    const desertRef = ref(storage, `images/storePic/${authId}/test/${img}`);
 
-    // Delete the file
-    deleteObject(desertRef)
-      .then(() => {
-        return;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
+  const desertRef = ref(storage, `images/storePic/${authId}/${map}/${onePicName}`);
+
+  // Delete the file
+  deleteObject(desertRef)
+    .then(() => {
+      return `${onePicName} deleted!`
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
-export const downloadPicsRefsFirebase = (authId, productId) => {
+export const downloadPicsRefsFirebase = (authId, path, GoodPicName) => {
   const storage = getStorage();
-  if (productId == null) {
-    productId = "test";
-  } else {
-    productId = `${productId}/test`;
-  }
+  // if (productId == null) {
+  //   productId = "test";
+  // } else {
+  //   productId = `${productId}/test`;
+  // }
+
+  console.log(path);
   // Create a reference under which you want to list
-  const listRef = ref(storage, `images/storePic/${authId}/${productId}`);
+  const listRef = ref(storage, `images/storePic/${authId}/${path}`);
   // const listRef = ref(storage, `images/storePic/${authId}/${productId}`);
 
   // Find all the prefixes and items.
   return listAll(listRef)
     .then((res) => {
-      return res.items.map((item) => item.name);
+      let picsNameArray = res.items.map((item) => item.name)
+      
+      return picsNameArray;
     })
     .catch((error) => {
       console.log(error);

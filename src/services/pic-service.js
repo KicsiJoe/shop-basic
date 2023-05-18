@@ -1,4 +1,8 @@
-import { prevPicSetterLoaderFirebase } from "../repositories/pic-repo";
+import {
+  delUselessPicFirebase,
+  downloadPicsRefsFirebase,
+  prevPicSetterLoaderFirebase,
+} from "../repositories/pic-repo";
 
 export const prevPicSetterLoader = (
   newImage,
@@ -13,14 +17,19 @@ export const prevPicSetterLoader = (
     inputs,
     productId
   ).then((res) => {
-   
     setImageInput(res);
     return res;
   });
 };
 
-export const delUselessPics =(inputs, imageInput )=>{
-    console.log(imageInput);
-    console.log(inputs);
-    // downloadPicsRefsFirebase(inputs.authId, productId)
-}
+export const delUselessPics = (inputs, map) => {
+  console.log(inputs);
+  downloadPicsRefsFirebase(inputs.authId, map, inputs.pic.picName).then((res) =>
+    res.forEach((onePicName) => {
+      if (onePicName != inputs.pic.picName) {
+        console.log(onePicName + " vs " + inputs.pic.picName);
+        return delUselessPicFirebase(map, onePicName, inputs.authId);
+      }
+    })
+  );
+};

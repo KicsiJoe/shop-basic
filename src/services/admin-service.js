@@ -58,11 +58,19 @@ export const downloadPicsRefs = (authId, productId) => {
 };
 
 export const updateItem = (inputs, res) => {
+   // { authId, productId, picUrl: url, picName: fileName } == res
+  let productId = res.productId
+  console.log(res.picUrl);
   return updateItemFirebase(
     inputs,
     res.authId,
     res.productId,
     res.picUrl,
     res.picName
-  );
+  ).then((res) => {
+    
+    console.log(res);
+    console.log(productId);
+   
+    return productId})
 };

@@ -19,5 +19,5 @@ console.log(inputsCopy);
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(inputsCopy),
-  }).then((res) => res.json());
+  }).then((res) =>  res.json());
 };

@@ -3,8 +3,6 @@ import { useState } from "react";
 import {
   addNewProductService,
   delProductService,
-  delUselessPic,
-  downloadPicsRefs,
   editProductService,
   updateItem,
 } from "../../services/admin-service";
@@ -14,13 +12,15 @@ import style from "../../css/Forms.module.css";
 import { v4 as uuid } from "uuid";
 import { AuthContext } from "../../contexts/AuthContext";
 import { checkInputs, getOnePicUrl, savePic } from "../../services/utilities";
-import { delUselessPics, prevPicSetterLoader } from "../../services/pic-service";
+import {
+  delUselessPics,
+  prevPicSetterLoader,
+} from "../../services/pic-service";
 
 export const NO_IMG =
   "https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FnoImg%2Fno_image.png?alt=media&token=a4dc5986-5d73-4fb7-b4c3-52de9cda1136";
 
 const ProductForm = ({ btn, text, nav, data, productId }) => {
-
   console.log(data);
   const { loggedIn } = useContext(AuthContext);
 
@@ -54,21 +54,17 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
 
   // MEGLEVO KEPET IDE MENTI AZ ELSO BETOLTESNEL, VAGY UJ INDITASNAL ALAP KEPET AD HOZZA
   const [inputs, setInputs] = useState(basicInputs);
-console.log({inputs});
+  console.log({ inputs });
   //INPUT RANYOMASKOR IDE MENT:
   const [newImage, setNewImage] = useState(null);
-  console.log(newImage);
   // A TEST MAPPABA MENTI AZ UJ IMG OBJECTET:
   const [imageInput, setImageInput] = useState({
     picUrl: null,
     picName: null,
     file: null,
     map: null,
-    filesInMap: []
   });
   // console.clear()
-
-  console.log(imageInput);
   // const [fileData, setFileData] = useState(null);
   const [images, setImages] = useState([]);
   //OLDALFRISSITESHEZ KELL:
@@ -78,10 +74,6 @@ console.log({inputs});
 
   useEffect(() => {
     if (newImage != null) {
-      console.clear();
-      console.log(productId);
-      console.log(inputs);
-      console.log(newImage);
       prevPicSetterLoader(newImage, inputs, setImageInput, productId).then(
         (res) => {
           console.log("valasztottunk kepet");
@@ -186,6 +178,8 @@ console.log({inputs});
   function submit(e) {
     e.preventDefault();
     let inputsNew;
+
+    //KESZ A NEW!!
     if (text == "new") {
       console.log("uj PRODUCT LETREHOZASA");
       if (newImage == null) {
@@ -202,6 +196,7 @@ console.log({inputs});
         return addNewProductService(inputsNew)
           .then((res) => savePic(loggedIn.authId, res.name, newImage))
           .then((res) => updateItem(inputs, res))
+          .then((resId) => delUselessPics(inputs, "test"))
           .then((res) => navigate(nav))
           .catch(function (e) {
             alert(e);
@@ -211,12 +206,31 @@ console.log({inputs});
 
     if (text == "edit") {
       console.log("EDIT PRODUCT");
-      console.log(inputs);
-      console.log(newImage);
+      console.clear();
       if (newImage != null) {
         inputsNew = { ...inputs, pic: { picName: newImage.name, picUrl: "" } };
+        console.log(inputsNew);
         savePic(loggedIn.authId, productId, newImage, inputsNew)
-          .then((res) => updateItem(inputsNew, res))
+          .then((res) => {
+            inputsNew = {
+              ...inputs,
+              pic: { picUrl: res.picUrl, picName: newImage.name },
+            };
+            setInputs(inputsNew);
+            return inputsNew;
+          })
+          .then((res) =>
+            updateItem(inputsNew, {
+              authId: res.authId,
+              productId: productId,
+              picUrl: res.pic.picUrl,
+              picName: res.pic.picName,
+            })
+          )
+          // { authId, productId, picUrl: url, picName: fileName }
+          // EZ ELOTT TUTI JO!!
+
+          .then((res) => delUselessPics(inputsNew, productId))
           .then((response) => navigate(nav))
           .catch(function (e) {
             alert(e);
@@ -246,12 +260,11 @@ console.log({inputs});
 
   function cancelBtn(e) {
     e.preventDefault();
-    // console.log(data.authId);
-    // delUselessPic(data.authId, images);
-    // }
-    if(imageInput.picUrl != null){
-      delUselessPics(inputs, imageInput )
-
+    console.clear();
+    console.log(imageInput.picUrl);
+    if (imageInput.picUrl != null) {
+      console.log("torles" + " " + imageInput.map);
+      delUselessPics(inputs, imageInput.map);
     }
     navigate("/admin/products/1/title/asc");
   }
