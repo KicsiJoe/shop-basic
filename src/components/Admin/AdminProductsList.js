@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   delProductService,
@@ -18,8 +18,10 @@ import {
 } from "../../icon/icons.js";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext.js";
 
 const AdminProductsList = () => {
+  const { loggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const { pageId, sortBy, sortType } = useParams();
   // console.log({ pageId });
@@ -139,7 +141,7 @@ const AdminProductsList = () => {
                   <Link to={`/admin/product/del/${arr[0]}`}>Delete</Link> |
                   <span
                     onClick={() =>
-                      delProductService(arr[0]).then((res) =>
+                      delProductService(arr[0], loggedIn.authId).then((res) =>
                         setPushed((prev) => !prev)
                       )
                     }

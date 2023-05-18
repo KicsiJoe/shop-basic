@@ -6,6 +6,7 @@ import {
 import { updateItemFirebase } from "../repositories/crud";
 import { getProducts } from "../repositories/getProduct";
 import { delUselessPicFirebase, downloadPicsRefsFirebase } from "../repositories/pic-repo.js";
+import { delAllPic } from "./pic-service";
 import { checkInputs } from "./utilities";
 
 export const addNewProductService = (inputs) => {
@@ -20,8 +21,8 @@ export const editProductService = (inputs, productId) => {
   return editProductServiceFirebase(inputs, productId);
   else return Promise.reject("HIBA A KITÖLTÉSNÉL!");
 };
-export const delProductService = (productId) => {
-  return delProductServiceFirebase(productId);
+export const delProductService = (productId, authId) => {
+  return delProductServiceFirebase(productId).then(res=> delAllPic(authId, productId ))
 };
 
 export const getProductsData = (what) => {

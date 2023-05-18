@@ -13,6 +13,7 @@ import { v4 as uuid } from "uuid";
 import { AuthContext } from "../../contexts/AuthContext";
 import { checkInputs, getOnePicUrl, savePic } from "../../services/utilities";
 import {
+  delAllPic,
   delUselessPics,
   prevPicSetterLoader,
 } from "../../services/pic-service";
@@ -243,7 +244,7 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
     }
 
     if (text == "delete")
-      return delProductService(productId).then((res) => navigate(nav));
+      return delProductService(productId).then(res=> delAllPic(loggedIn.authId ,productId)).then((res) => navigate(nav));
   }
   function inputTitle(e) {
     setInputs({ ...inputs, title: e.target.value });

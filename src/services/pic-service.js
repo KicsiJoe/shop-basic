@@ -33,3 +33,12 @@ export const delUselessPics = (inputs, map) => {
     })
   );
 };
+
+export const delAllPic=(authId ,productId)=>{
+ return downloadPicsRefsFirebase(authId, productId).then((res) =>
+ res.forEach((onePicName) => {
+ 
+     return delUselessPicFirebase(productId, onePicName, authId);
+   
+ }))
+}
