@@ -28,7 +28,7 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
   let basicInputs;
   if (text == "new") {
     basicInputs = {
-      productId : "",
+      productId: "",
       title: "",
       price: "",
       "item-number": "",
@@ -41,7 +41,6 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
   }
 
   if (Object.keys(data).length > 0 && text != "new") {
-    console.log("regi data hasznalat");
     basicInputs = {
       productId: data.productId,
       title: data.title,
@@ -170,18 +169,19 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
 
     //KESZ A NEW!!
     if (text == "new") {
-      console.log("uj PRODUCT LETREHOZASA");
       if (newImage == null) {
         // inputsNew= {...inputs, pic : {picName: newImage.name, picUrl: "" }}
         inputsNew = { ...inputs };
-        return addNewProductService(inputsNew).then(itemId=> updateWithId(itemId, loggedIn.authId ))
+        return addNewProductService(inputsNew)
+          .then((itemId) => updateWithId(itemId, loggedIn.authId))
           .then((res) => navigate(nav))
           .catch(function (e) {
             alert(e);
           });
       } else {
         inputsNew = { ...inputs, pic: { picName: newImage.name, picUrl: "" } };
-        return addNewProductService(inputsNew).then(itemId=> updateWithId(itemId, loggedIn.authId, setInputs))
+        return addNewProductService(inputsNew)
+          .then((itemId) => updateWithId(itemId, loggedIn.authId, setInputs))
           .then((res) => savePic(loggedIn.authId, res.name, newImage))
           .then((res) => updateItem(inputs, res))
           .then((resId) => delUselessPics(inputs, "test"))
@@ -193,7 +193,6 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
     }
 
     if (text == "edit") {
-      console.log("EDIT PRODUCT");
       if (newImage != null) {
         inputsNew = { ...inputs, pic: { picName: newImage.name, picUrl: "" } };
         savePic(loggedIn.authId, productId, newImage, inputsNew)
@@ -229,7 +228,9 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
     }
 
     if (text == "delete")
-      return delProductService(productId).then(res=> delAllPic(loggedIn.authId ,productId)).then((res) => navigate(nav));
+      return delProductService(productId)
+        .then((res) => delAllPic(loggedIn.authId, productId))
+        .then((res) => navigate(nav));
   }
   function inputTitle(e) {
     setInputs({ ...inputs, title: e.target.value });

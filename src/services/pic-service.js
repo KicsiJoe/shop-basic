@@ -27,7 +27,6 @@ export const delUselessPics = (inputs, map) => {
   downloadPicsRefsFirebase(inputs.authId, map, inputs.pic.picName).then((res) =>
     res.forEach((onePicName) => {
       if (onePicName != inputs.pic.picName) {
-        console.log(onePicName + " vs " + inputs.pic.picName);
         return delUselessPicFirebase(map, onePicName, inputs.authId);
       }
     })

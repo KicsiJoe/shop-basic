@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "../../css/Header.module.css";
 import {
   shop,
@@ -6,18 +6,21 @@ import {
   heart_full,
   search,
   profile,
-  cart,
+  cartIcon,
 } from "../../icon/icons";
 import Navbar_ul from "./Navbar_ul";
 import { NavLink } from "react-router-dom";
 import Logout from "../Logout";
-import { useContext } from "react";
+
 import { AuthContext } from "../../contexts/AuthContext";
+import {CartContext} from "../../contexts/CartContext"
 
 
 const Header = () => {
 
   const {loggedIn } = useContext(AuthContext)
+  const {cart, setCart} = useContext(CartContext)
+
 
   return (
     <div className={styles.header_box}>
@@ -48,9 +51,9 @@ const Header = () => {
 
           <div className={styles.icon_boxes}>
             <span className={styles.icon}>
-              <NavLink to="/cart">{cart}</NavLink>
+              <NavLink to="/cart">{cartIcon}</NavLink>
             </span>
-            <span className={styles.numb}>0</span>
+            <span className={styles.numb}>{Object.keys(cart).length}</span>
           </div>
 
           <div className={styles.icon_boxes}>

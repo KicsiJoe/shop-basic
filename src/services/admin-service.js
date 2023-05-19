@@ -15,7 +15,6 @@ import { checkInputs } from "./utilities";
 export const addNewProductService = (inputs) => {
   if (checkInputs(inputs)) {
     return addNewProductFirebase(inputs).then((res) => {
-      console.log(res.name);
       return res.name;
     });
   } else {
@@ -35,9 +34,7 @@ export const delProductService = (productId, authId) => {
 export const getProductsData = (what) => {
   if (what == "all") {
     return getProducts(what).then((res) => {
-      // console.log(res);
       if (res != null || res != undefined) {
-        // console.log(Object.entries(res));
         return Object.entries(res);
       } else {
         return [];
@@ -46,7 +43,6 @@ export const getProductsData = (what) => {
   } else {
     return getProducts(what).then((res) => {
       if (res != null || res != undefined) {
-        // console.log(res);
         return res;
       } else {
         return [];
@@ -66,7 +62,7 @@ export const downloadPicsRefs = (authId, productId) => {
 export const updateItem = (inputs, res) => {
   // { authId, productId, picUrl: url, picName: fileName } == res
   let productId = res.productId;
-  console.log(res.picUrl);
+
   return updateItemFirebase(
     inputs,
     res.authId,
@@ -74,15 +70,11 @@ export const updateItem = (inputs, res) => {
     res.picUrl,
     res.picName
   ).then((res) => {
-    console.log(res);
-    console.log(productId);
-
     return productId;
   });
 };
 
 export const updateWithId = (itemId, authId, setInputs) => {
-  console.log(itemId);
   return updateWithIdFirebase(itemId, authId).then((res) => {
     if (setInputs != undefined) {
       setInputs((prev) => ({ ...prev, productId: itemId }));
