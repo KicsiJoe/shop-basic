@@ -6,7 +6,7 @@ import { addToCart } from '../../icon/icons';
 const Card = ({cardObj, setCart, cart}) => {
     
         return ( 
-        <div className={style.card_box}>
+        <div className={style.card_box} >
             <img src={cardObj.pic.picUrl} alt="picture" />
             <p>{cardObj.title}</p>
             <p>{cardObj.id}</p>
@@ -22,6 +22,7 @@ const Card = ({cardObj, setCart, cart}) => {
 
                 setCart({...cart, [cardObj["productId"]] : 1 })
             } else {
+                
                 let itemNumberInCart = Number(cart[cardObj.productId]) + 1
                 console.log(itemNumberInCart);
                 setCart({...cart, [cardObj["productId"]] : itemNumberInCart })

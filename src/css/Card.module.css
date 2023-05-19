@@ -15,22 +15,24 @@
    object-fit: cover;
     overflow: hidden;
    display: block;
-
+   width: 100%;
+   margin-bottom: 10px;
+   
 }
 
 .card_box > * {
     margin: 0;
 }
-.card_box > img {
-    margin-bottom: 10px;
-}
 
-.addToCart{
+
+.addToCart svg{
     width: 2em;
     height: 2em;
     cursor: pointer;
 }
-.addToCart svg{
-    width: 2em;
-    height: 2em;
-}
+
+
+
+
+
+

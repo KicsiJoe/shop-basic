@@ -1,0 +1,72 @@
+img {
+    object-fit: cover;
+    display: block;
+    width: 100%;
+   padding: 0;
+   border-top-left-radius: 5px;
+   border-top-right-radius: 5px;
+}
+
+.item_minus, .item_plus  {
+    box-sizing: border-box;
+  background-color: lightgrey;
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+}
+.item_minus {
+    
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.item_plus {
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
+    
+}
+
+.btns_box {
+    box-sizing: border-box;
+    display: flex;
+    height: min-content;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cart_box {
+    border: 1px solid black;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #404040;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+width: 100%;
+height: 100%;
+}
+
+.table_width_title {
+    height: min-content;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-content: flex-start;
+  }
+  
+  .title {
+    text-align: center;
+    text-decoration: underline wavy;
+  }
+
+  .cards_container {
+    display: grid;
+    place-items: center;
+    gap: 1em;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-auto-rows: 15em;
+    margin-top: 20px;
+  }
