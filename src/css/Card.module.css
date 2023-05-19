@@ -25,3 +25,12 @@
     margin-bottom: 10px;
 }
 
+.addToCart{
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+}
+.addToCart svg{
+    width: 2em;
+    height: 2em;
+}

@@ -10,8 +10,9 @@ export const updateItemFirebase = (
   picName
 ) => {
 
+  let newInp = {...inputs,productId: productId }
 
-  let inputsCopy = {...inputs,
+  let inputsCopy = {...newInp,
     pic: { picUrl: picUrl, picName: picName }}
 console.log(inputsCopy);
 
@@ -21,3 +22,16 @@ console.log(inputsCopy);
     body: JSON.stringify(inputsCopy),
   }).then((res) =>  res.json());
 };
+
+export const updateWithIdFirebase=(itemId, authId)=>{
+  console.log(itemId);
+  console.log(authId);
+  return fetch(`${URL}/products/${itemId}/.json`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({"productId": itemId}),
+  }).then((res) =>  res.json()).then(res=> {
+    console.log(res);
+    return res
+  })
+}

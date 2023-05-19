@@ -5,6 +5,7 @@ import {
   delProductService,
   editProductService,
   updateItem,
+  updateWithId,
 } from "../../services/admin-service";
 import { useNavigate } from "react-router-dom";
 import style from "../../css/Forms.module.css";
@@ -22,12 +23,12 @@ export const NO_IMG =
   "https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FnoImg%2Fno_image.png?alt=media&token=a4dc5986-5d73-4fb7-b4c3-52de9cda1136";
 
 const ProductForm = ({ btn, text, nav, data, productId }) => {
-  console.log(data);
   const { loggedIn } = useContext(AuthContext);
 
   let basicInputs;
   if (text == "new") {
     basicInputs = {
+      productId : "",
       title: "",
       price: "",
       "item-number": "",
@@ -42,6 +43,7 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
   if (Object.keys(data).length > 0 && text != "new") {
     console.log("regi data hasznalat");
     basicInputs = {
+      productId: data.productId,
       title: data.title,
       price: data.price,
       "item-number": data["item-number"],
@@ -55,7 +57,6 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
 
   // MEGLEVO KEPET IDE MENTI AZ ELSO BETOLTESNEL, VAGY UJ INDITASNAL ALAP KEPET AD HOZZA
   const [inputs, setInputs] = useState(basicInputs);
-  console.log({ inputs });
   //INPUT RANYOMASKOR IDE MENT:
   const [newImage, setNewImage] = useState(null);
   // A TEST MAPPABA MENTI AZ UJ IMG OBJECTET:
@@ -65,9 +66,6 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
     file: null,
     map: null,
   });
-  // console.clear()
-  // const [fileData, setFileData] = useState(null);
-  const [images, setImages] = useState([]);
   //OLDALFRISSITESHEZ KELL:
   const [newPicDownloadToSee, setNewPicDownloadToSee] = useState(true);
 
@@ -77,21 +75,11 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
     if (newImage != null) {
       prevPicSetterLoader(newImage, inputs, setImageInput, productId).then(
         (res) => {
-          console.log("valasztottunk kepet");
           return setNewPicDownloadToSee((prev) => !prev);
         }
       );
     }
   }, [newImage]);
-
-  // useEffect(() => {
-  //   if (imageInput?.picUrl) {
-  //     console.log("van az imageInput.picUrl?" );
-  //     downloadPicsRefs(inputs.authId, productId).then((res) => {
-  //       return setImages(res);
-  //     });
-  //   }
-  // }, [newImagePreview, newPicDownloadToSee]);
 
   return (
     <form className={style.form} onSubmit={(e) => submit(e)}>
@@ -186,15 +174,14 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
       if (newImage == null) {
         // inputsNew= {...inputs, pic : {picName: newImage.name, picUrl: "" }}
         inputsNew = { ...inputs };
-        return addNewProductService(inputsNew)
+        return addNewProductService(inputsNew).then(itemId=> updateWithId(itemId, loggedIn.authId ))
           .then((res) => navigate(nav))
           .catch(function (e) {
             alert(e);
           });
       } else {
         inputsNew = { ...inputs, pic: { picName: newImage.name, picUrl: "" } };
-        console.log(inputsNew);
-        return addNewProductService(inputsNew)
+        return addNewProductService(inputsNew).then(itemId=> updateWithId(itemId, loggedIn.authId, setInputs))
           .then((res) => savePic(loggedIn.authId, res.name, newImage))
           .then((res) => updateItem(inputs, res))
           .then((resId) => delUselessPics(inputs, "test"))
@@ -207,10 +194,8 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
 
     if (text == "edit") {
       console.log("EDIT PRODUCT");
-      console.clear();
       if (newImage != null) {
         inputsNew = { ...inputs, pic: { picName: newImage.name, picUrl: "" } };
-        console.log(inputsNew);
         savePic(loggedIn.authId, productId, newImage, inputsNew)
           .then((res) => {
             inputsNew = {
@@ -261,10 +246,7 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
 
   function cancelBtn(e) {
     e.preventDefault();
-    console.clear();
-    console.log(imageInput.picUrl);
     if (imageInput.picUrl != null) {
-      console.log("torles" + " " + imageInput.map);
       delUselessPics(inputs, imageInput.map);
     }
     navigate("/admin/products/1/title/asc");

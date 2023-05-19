@@ -1,0 +1,37 @@
+{
+  "products": {
+    "-NViChb-2lngDrKZ-V1a": {
+      "authId": "gllzgROyTsXg4Pu2TOMrtqCKDMD3",
+      "item-number": "1",
+      "pic": {
+        "picName": "1.jpg",
+        "picUrl": "https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FstorePic%2FgllzgROyTsXg4Pu2TOMrtqCKDMD3%2F-NViChb-2lngDrKZ-V1a%2F1.jpg?alt=media&token=6350fd2a-8a19-4310-a156-25d2fede3c1c"
+      },
+      "price": "1",
+      "title": "1"
+    }
+  },
+  "users": {
+    "BwfTLoB483fglrorlglWDdZ9rpX2": {
+      "authId": "BwfTLoB483fglrorlglWDdZ9rpX2",
+      "company": true,
+      "email": "comp@company.com",
+      "role": "company",
+      "userName": "Company_01"
+    },
+    "gllzgROyTsXg4Pu2TOMrtqCKDMD3": {
+      "authId": "gllzgROyTsXg4Pu2TOMrtqCKDMD3",
+      "company": false,
+      "email": "admin@admin.hu",
+      "role": "admin",
+      "userName": "Admin"
+    },
+    "rtlpjDncu6RjCBHF3pbt9xce9OS2": {
+      "authId": "rtlpjDncu6RjCBHF3pbt9xce9OS2",
+      "company": false,
+      "email": "teszt@teszt.hu",
+      "role": "user",
+      "userName": "teszt"
+    }
+  }
+}

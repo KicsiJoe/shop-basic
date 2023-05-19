@@ -9,7 +9,6 @@ import {
 } from "firebase/storage";
 
 export const getOnePicUrlFromFirebase = (picName, path) => {
-  console.log(`${path}/${picName}`);
   const storage = getStorage(app);
 
   let spaceRef = ref(storage, `${path}/${picName}`);
@@ -24,10 +23,8 @@ export const savePicFirebase = (authId, productId, imageData) => {
     storage,
     `images/storePic/${authId}/${productId}/${fileName}`
   );
-  console.log("savePicFirebase");
   return uploadBytes(fileRef, imageData).then((uploadResult) => {
     return getDownloadURL(uploadResult?.ref).then((url) => {
-      console.log({ authId, productId, picUrl: url, picName: fileName });
       return { authId, productId, picUrl: url, picName: fileName };
     });
   });
@@ -44,8 +41,6 @@ export const prevPicSetterLoaderFirebase = (
   } else {
     productId = `${productId}`;
   }
-
-  // console.log(fileName);
   const storage = getStorage(app);
   const fileRef = ref(
     storage,
@@ -53,8 +48,6 @@ export const prevPicSetterLoaderFirebase = (
   );
   return uploadBytes(fileRef, fileData).then((uploadResult) => {
     return getDownloadURL(uploadResult?.ref).then((url) => {
-      // console.clear()
-      // console.log({ picUrl: url, picName: fileName });
       return {
         picUrl: url,
         picName: fileName,
@@ -67,28 +60,23 @@ export const prevPicSetterLoaderFirebase = (
 
 export const delUselessPicFirebase = (map, onePicName, authId) => {
   const storage = getStorage();
-
-  const desertRef = ref(storage, `images/storePic/${authId}/${map}/${onePicName}`);
+  const desertRef = ref(
+    storage,
+    `images/storePic/${authId}/${map}/${onePicName}`
+  );
 
   // Delete the file
   deleteObject(desertRef)
     .then(() => {
-      return `${onePicName} deleted!`
+      return `${onePicName} deleted!`;
     })
     .catch((error) => {
       console.log(error);
     });
 };
 
-export const downloadPicsRefsFirebase = (authId, path, GoodPicName) => {
+export const downloadPicsRefsFirebase = (authId, path) => {
   const storage = getStorage();
-  // if (productId == null) {
-  //   productId = "test";
-  // } else {
-  //   productId = `${productId}/test`;
-  // }
-
-  console.log(path);
   // Create a reference under which you want to list
   const listRef = ref(storage, `images/storePic/${authId}/${path}`);
   // const listRef = ref(storage, `images/storePic/${authId}/${productId}`);
@@ -96,8 +84,8 @@ export const downloadPicsRefsFirebase = (authId, path, GoodPicName) => {
   // Find all the prefixes and items.
   return listAll(listRef)
     .then((res) => {
-      let picsNameArray = res.items.map((item) => item.name)
-      
+      let picsNameArray = res.items.map((item) => item.name);
+
       return picsNameArray;
     })
     .catch((error) => {

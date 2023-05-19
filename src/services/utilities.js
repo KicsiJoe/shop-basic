@@ -19,6 +19,6 @@ export const getOnePicUrl = (picName, path) => {
   return getOnePicUrlFromFirebase(picName, path);
 };
 
-export const savePic = (userId, itemId, imageData, inputsNew) => {
+export const savePic = (userId, itemId, imageData) => {
   return savePicFirebase(userId, itemId, imageData)
 };
