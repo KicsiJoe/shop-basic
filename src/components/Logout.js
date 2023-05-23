@@ -1,13 +1,22 @@
 import React from "react";
 import { useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext.js";
+import { AuthContext } from "../contexts/AuthContext";
 import { logout } from "../icon/icons";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import style from "../css/Header.module.css";
+
+import { CartContext } from "../contexts/CartContext";
+import { UserCartContext } from "../contexts/UserCartContext.js";
+
+
+
 
 const Logout = () => {
   const navigate = useNavigate();
   const { loggedIn, setLoggedIn } = useContext(AuthContext);
+  const { setCart } = useContext(CartContext); 
+  const { setUserCart } = useContext(UserCartContext); 
+
 
   return (
     <div className={style.text_logout}>
@@ -16,7 +25,9 @@ const Logout = () => {
     </div>
   );
   function logoutFunc() {
+    setCart({})
     setLoggedIn({});
+    setUserCart(null)
     navigate("/");
   }
 };
