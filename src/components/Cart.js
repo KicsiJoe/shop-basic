@@ -24,16 +24,21 @@ const Cart = () => {
 
   //Items in UserCart in firebase:
   const [userCart, setUserCart] = useState(null); // {starter: null} --> [{…}, 3]
+  console.log(userCart);
 
-  const [userFirebaseCart, setUserFirebaseCart] = useState(null); // {starter: null
 
+  const [userFirebaseCart, setUserFirebaseCart] = useState(null); // {starter: null}
+  // {-NVngFzYgp_Z_v8U1GtC: 6, -NVnh64gwRyHO0SVkyRE: 13, -NVnwSHNX2NtX3ernzlC: 4, -NW7tqVGoX8qZ3Cig6PO: 5}
+
+console.log(userFirebaseCart);
   const [trigger, setTrigger] = useState(true);
 
   useEffect(() => {
     if (Object.keys(cart).length != 0) {
       getCartItems(cart, setCartItems);
     }
-  }, [cart]);
+  }, [cart, userCart, trigger]);
+
 
   useEffect(() => {
     getUserCartWithModification(
@@ -57,6 +62,8 @@ const Cart = () => {
             setCart={setCart}
             cart={cart}
             text={"new"}
+            setTrigger={setTrigger}
+            setCartItems={setCartItems}
           />
         </>
       ) : (

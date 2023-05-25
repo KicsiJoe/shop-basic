@@ -12,10 +12,17 @@ const OwnCart = ({ userCart, userFirebaseCart, setTrigger }) => {
   useEffect(() => {
     setTotal(
       userCart?.reduce((acc, current) => {
-        return acc + current[0]["price"] * current[1];
+        if(current[0]["price"] == undefined){
+          return acc
+        } else {
+
+          return acc + current[0]["price"] * current[1];
+        }
       }, 0)
     );
   }, [userCart]);
+
+  console.log(userCart);
 
   return (
     <>
@@ -25,33 +32,47 @@ const OwnCart = ({ userCart, userFirebaseCart, setTrigger }) => {
       <div className={style.cards_container}>
         {userCart?.length > 0
           ? userCart.map((item) => {
-              return (
-                <div key={uid()} className={style.cart_box}>
-                  <img
-                    className={style.card_img}
-                    src={item[0].pic.picUrl}
-                    alt="picture"
-                  />
-                  <div>{item[0].title}</div>
-                  <div>{item[0].price} EUR</div>
-                  <div>Subtotal: {item[1] * item[0].price} EUR</div>
-                  <div className={style.btns_box}>
-                    <span
-                      className={style.item_minus}
-                      onClick={() => item_minus(item)}
-                    >
-                      -
-                    </span>
-                    <span>{item[1]}</span>
-                    <span
-                      className={style.item_plus}
-                      onClick={() => item_plus(item)}
-                    >
-                      +
-                    </span>
+              if (item[0] != "deleted") {
+                return (
+                  <div key={uid()} className={style.cart_box}>
+                    <img
+                      className={style.card_img}
+                      src={item[0].pic.picUrl}
+                      alt="picture"
+                    />
+                    <div>{item[0].title}</div>
+                    <div>{item[0].price} EUR</div>
+                    <div>Subtotal: {item[1] * item[0].price} EUR</div>
+                    <div className={style.btns_box}>
+                      <span
+                        className={style.item_minus}
+                        onClick={() => item_minus(item)}
+                      >
+                        -
+                      </span>
+                      <span>{item[1]}</span>
+                      <span
+                        className={style.item_plus}
+                        onClick={() => item_plus(item)}
+                      >
+                        +
+                      </span>
+                    </div>
                   </div>
-                </div>
-              );
+                )
+              } else {
+                return (
+                  <div key={uid()} className={style.cart_box}>
+                    <img
+                      className={style.card_img}
+                      src="https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FstorePic%2FgllzgROyTsXg4Pu2TOMrtqCKDMD3%2F-NVngFzYgp_Z_v8U1GtC%2Fno_image.png?alt=media&token=63451652-6c0b-446d-824e-ddda3c36b108"
+                      alt="picture"
+                    />
+                    <div>DELETED ITEM</div>
+                    <div></div>
+                  
+                  </div>)
+              }
             })
           : ""}
       </div>
@@ -95,10 +116,6 @@ const OwnCart = ({ userCart, userFirebaseCart, setTrigger }) => {
     if (loggedIn.authId) {
       alert("rendeles van!");
     } else alert("be kell jelentkezni!");
-  }
-
-  function saveForLater(userCart) {
-    // saveCart(cartItems )
   }
 };
 

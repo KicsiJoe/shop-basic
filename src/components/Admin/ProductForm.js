@@ -167,7 +167,6 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
     e.preventDefault();
     let inputsNew;
 
-    //KESZ A NEW!!
     if (text == "new") {
       if (newImage == null) {
         // inputsNew= {...inputs, pic : {picName: newImage.name, picUrl: "" }}
@@ -232,6 +231,7 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
         .then((res) => delAllPic(loggedIn.authId, productId))
         .then((res) => navigate(nav));
   }
+
   function inputTitle(e) {
     setInputs({ ...inputs, title: e.target.value });
   }

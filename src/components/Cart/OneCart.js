@@ -2,10 +2,17 @@ import React, { useContext, useEffect, useState } from "react";
 import style from "../../css/Cart.module.css";
 import "../../css/App.css";
 import { v4 as uid } from "uuid";
-import { AuthContext } from "../../contexts/AuthContext.js";
+import { AuthContext } from "../../contexts/AuthContext";
+import { UserCartContext } from "../../contexts/UserCartContext";
 
-const OneCart = ({ cartItems, setCart, cart }) => {
+import { updateUserOwnCart } from "../../services/cart-services";
+// import {  useNavigate } from "react-router-dom";
+
+const OneCart = ({ cartItems, setCart, cart, setTrigger , setCartItems}) => {
+  // const navigate = useNavigate()
   const { loggedIn } = useContext(AuthContext);
+  const { userCart, setUserCart } = useContext(UserCartContext);
+  // const [trigger, setTrigger] = useState(false)
 
   const [total, setTotal] = useState(0);
 
@@ -16,6 +23,10 @@ const OneCart = ({ cartItems, setCart, cart }) => {
       }, 0)
     );
   }, [cartItems]);
+
+
+
+
 
   return (
     <>
@@ -88,7 +99,32 @@ const OneCart = ({ cartItems, setCart, cart }) => {
   }
 
   function saveForLater(cartItems) {
-    // saveCart(cartItems )
+    console.log(cart);
+    console.log(cartItems);
+    console.log(userCart);
+    let userCartCopy = { ...userCart };
+    let userCartObj = Object.keys(userCart);
+
+    cartItems.forEach((item) => {
+      userCartObj.includes(item[0].productId)
+        ? (userCartCopy = {
+            ...userCartCopy,
+            [item[0].productId]:
+              Number(userCart[item[0].productId]) +
+              Number(item[1]),
+          })
+        : (userCartCopy = { ...userCartCopy, [item[0].productId] :item[1] });
+        console.log(userCartCopy);
+      });//[item[0].productId]: 
+      Promise.all([
+        updateUserOwnCart(userCartCopy, loggedIn.authId )
+        ,setCart({}), setCartItems(null)]).then(res=> setTrigger(prev=> !prev))
+        // ,
+        
+      // ,
+      //   setTrigger(prev=> !prev)
+      // ])
+      // .then(res=> navigate("/"))
   }
 };
 

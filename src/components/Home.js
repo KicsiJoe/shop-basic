@@ -4,8 +4,6 @@ import "../css/Home.css";
 import Cards from "./Cards/Cards";
 
 const Home = () => {
- 
-
   return (
     <>
       <div className="full_pic">

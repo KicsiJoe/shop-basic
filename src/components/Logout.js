@@ -25,10 +25,10 @@ const Logout = () => {
     </div>
   );
   function logoutFunc() {
-    setCart({})
-    setLoggedIn({});
-    setUserCart(null)
-    navigate("/");
+    Promise.all([setCart({}),
+    setLoggedIn({}),
+    setUserCart(null)]).then(res=>  navigate("/"))
+ 
   }
 };
 

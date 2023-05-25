@@ -9,8 +9,6 @@ export const getUserCartFirebase = (userId) => {
 };
 
 export const updateUserOwnCartFirebase = (cartCopy, userId) => {
-  ///users/gllzgROyTsXg4Pu2TOMrtqCKDMD3/carts/old/-NVngFzYgp_Z_v8U1GtC
-
   return fetch(`${URL}/users/${userId}/cart.json`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },

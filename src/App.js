@@ -25,16 +25,19 @@ function App() {
         setProductsList([]);
       }
     });
-  }, []);
+  }, [trigger]);
 
   useEffect(() => {
+    console.log("triggereltem a userCartot");
     if (loggedIn.authId) {
       getUserCart(loggedIn.authId, setUserCart);
     }
-  }, [loggedIn, trigger]);
+  }, [loggedIn, trigger, cart ]);
+
+
   return (
     <AuthContext.Provider value={{ loggedIn, setLoggedIn }}>
-      <ProductsContext.Provider value={{ productsList, setProductsList }}>
+      <ProductsContext.Provider value={{ productsList, setProductsList, setTrigger }}>
         <CartContext.Provider value={{ cart, setCart }}>
           <UserCartContext.Provider
             value={{ userCart, setUserCart, setTrigger }}
