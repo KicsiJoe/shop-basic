@@ -18,27 +18,29 @@ const Cart = () => {
   const { loggedIn } = useContext(AuthContext);
 
   //Items in CartContext:
-  const { cart, setCart } = useContext(CartContext); //{}
+  const { cart, setCart, setTriggerHeader  } = useContext(CartContext); //{}
   //CartContext Items with full item object+quantity:
   const [cartItems, setCartItems] = useState(null);
 
   //Items in UserCart in firebase:
   const [userCart, setUserCart] = useState(null); // {starter: null} --> [{…}, 3]
-  console.log(userCart);
-
 
   const [userFirebaseCart, setUserFirebaseCart] = useState(null); // {starter: null}
   // {-NVngFzYgp_Z_v8U1GtC: 6, -NVnh64gwRyHO0SVkyRE: 13, -NVnwSHNX2NtX3ernzlC: 4, -NW7tqVGoX8qZ3Cig6PO: 5}
 
-console.log(userFirebaseCart);
   const [trigger, setTrigger] = useState(true);
 
   useEffect(() => {
+    console.log("frissitem a cartot - ez lefut, ha belenyulok!!!");
+
     if (Object.keys(cart).length != 0) {
       getCartItems(cart, setCartItems);
     }
+    if(loggedIn.authId){
+      console.log("benne");
+      setTriggerHeader(prev=> !prev)
+    }
   }, [cart, userCart, trigger]);
-
 
   useEffect(() => {
     getUserCartWithModification(

@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import style from "../../css/Cart.module.css";
 import "../../css/App.css";
 import { v4 as uid } from "uuid";
-import { AuthContext } from "../../contexts/AuthContext.js";
-import { updateUserOwnCart } from "../../services/cart-services.js";
+import { AuthContext } from "../../contexts/AuthContext";
+import { updateUserOwnCart } from "../../services/cart-services";
+import { UserCartContext } from "../../contexts/UserCartContext";
 
 const OwnCart = ({ userCart, userFirebaseCart, setTrigger }) => {
   const { loggedIn } = useContext(AuthContext);
@@ -21,8 +22,6 @@ const OwnCart = ({ userCart, userFirebaseCart, setTrigger }) => {
       }, 0)
     );
   }, [userCart]);
-
-  console.log(userCart);
 
   return (
     <>

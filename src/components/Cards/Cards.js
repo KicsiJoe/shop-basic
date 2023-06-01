@@ -13,14 +13,11 @@ const Cards = () => {
 
   useEffect(() => {
     setTrigger((prev) => !prev);
-  }, []);
-
-  console.log(productsList);
+  }, [cart ]);
   return (
     <>
       {productsList?.length > 0
         ? productsList?.map((cardObj) => {
-          // console.log(cardObj);
             if (cardObj[1].productId != "deleted") {
               return (
                 <Card
@@ -28,7 +25,7 @@ const Cards = () => {
                   cardObj={cardObj[1]}
                   cart={cart}
                   setCart={setCart}
-                  loggedIn={loggedIn?.authId ? true : false}
+                  loggedInTrueOrFalse={loggedIn?.authId ? true : false}
                 />
               );
             } else {

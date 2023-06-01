@@ -51,28 +51,18 @@ export const getUserCartWithModification = (userId, callback, callback2) => {
       }
     })
     .then((items) => {
-      console.log(items);
-      console.log(Object.keys(items).length);
       if (Object.keys(items)) {
         return getProductsData("all").then((res) => {
-          console.log(res);
           let itemArr = [];
           let itemKeys = Object.keys(items);
           itemKeys.forEach((objKey) => {
-            console.log(objKey);
             let finded = res.find((arr) => arr[0] == objKey);
-            console.log(finded);
-            if(finded == undefined ){
-              console.log(res);
-              let finded = res.find((item) => item[0] == "deleted")
-              console.log("törölt");
-              console.log(finded);
+            if (finded == undefined) {
+              let finded = res.find((item) => item[0] == "deleted");
               return itemArr.push(["deleted", finded]);
             }
-            console.log(itemArr);
             return itemArr.push([finded[1], items[objKey]]);
           });
-            console.log(itemArr);
           return itemArr;
         });
       } else {
@@ -86,6 +76,5 @@ export const getUserCartWithModification = (userId, callback, callback2) => {
 };
 
 export const updateUserOwnCart = (cartCopy, userId) => {
-  console.log(cartCopy);
   return updateUserOwnCartFirebase(cartCopy, userId);
 };

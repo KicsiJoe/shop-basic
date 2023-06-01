@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "../../css/Header.module.css";
 import {
   shop,
@@ -13,14 +13,27 @@ import { NavLink } from "react-router-dom";
 import Logout from "../Logout";
 
 import { AuthContext } from "../../contexts/AuthContext";
-import {CartContext} from "../../contexts/CartContext"
-
+import { CartContext } from "../../contexts/CartContext";
+import { UserCartContext } from "../../contexts/UserCartContext";
 
 const Header = () => {
+  const { userCart, setUserCart, setTrigger } = useContext(UserCartContext);
 
-  const {loggedIn } = useContext(AuthContext)
-  const {cart, setCart} = useContext(CartContext)
+  const { loggedIn } = useContext(AuthContext);
+  const { cart, setCart } = useContext(CartContext);
+  
+  const [numberOfCard, setNumberOfCard] = useState(0);
 
+  useEffect(() => {
+    //Itt jarunk => headerben a kosarban mi jelenjen meg szam, ha be van lépve, vagy sem...
+    if (loggedIn.authId) {
+      console.log("bejelentkezve");
+      console.log(Object.keys(userCart).length);
+      setNumberOfCard(Object.keys(userCart).length);
+    } else {
+      setNumberOfCard(Object.keys(cart).length);
+    }
+  }, [cart, userCart, setTrigger]);
 
   return (
     <div className={styles.header_box}>
@@ -53,7 +66,7 @@ const Header = () => {
             <span className={styles.icon}>
               <NavLink to="/cart">{cartIcon}</NavLink>
             </span>
-            <span className={styles.numb}>{Object.keys(cart).length}</span>
+            <span className={styles.numb}>{numberOfCard}</span>
           </div>
 
           <div className={styles.icon_boxes}>

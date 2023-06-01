@@ -16,6 +16,7 @@ function App() {
   const [productsList, setProductsList] = useState(null);
   const [userCart, setUserCart] = useState(null);
   const [trigger, setTrigger] = useState(true);
+  const [triggerHeader, setTriggerHeader] = useState(true);
 
   useEffect(() => {
     getProduct("all").then((res) => {
@@ -32,13 +33,13 @@ function App() {
     if (loggedIn.authId) {
       getUserCart(loggedIn.authId, setUserCart);
     }
-  }, [loggedIn, trigger, cart ]);
+  }, [loggedIn, trigger, cart, triggerHeader ]);
 
 
   return (
     <AuthContext.Provider value={{ loggedIn, setLoggedIn }}>
       <ProductsContext.Provider value={{ productsList, setProductsList, setTrigger }}>
-        <CartContext.Provider value={{ cart, setCart }}>
+        <CartContext.Provider value={{ cart, setCart, setTriggerHeader }}>
           <UserCartContext.Provider
             value={{ userCart, setUserCart, setTrigger }}
           >

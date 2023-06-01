@@ -8,11 +8,10 @@ import { UserCartContext } from "../../contexts/UserCartContext";
 import { updateUserOwnCart } from "../../services/cart-services";
 // import {  useNavigate } from "react-router-dom";
 
-const OneCart = ({ cartItems, setCart, cart, setTrigger , setCartItems}) => {
-  // const navigate = useNavigate()
+const OneCart = ({ cartItems, setCart, cart, setTrigger, setCartItems }) => {
+  console.log(cart);
   const { loggedIn } = useContext(AuthContext);
   const { userCart, setUserCart } = useContext(UserCartContext);
-  // const [trigger, setTrigger] = useState(false)
 
   const [total, setTotal] = useState(0);
 
@@ -23,10 +22,6 @@ const OneCart = ({ cartItems, setCart, cart, setTrigger , setCartItems}) => {
       }, 0)
     );
   }, [cartItems]);
-
-
-
-
 
   return (
     <>
@@ -75,12 +70,12 @@ const OneCart = ({ cartItems, setCart, cart, setTrigger , setCartItems}) => {
 
   function item_minus(item) {
     const [product, quantity] = item;
-
-    if (quantity == 1) {
+    if (quantity == "1") {
       if (window.confirm("Do you want to remove the item from the cart?")) {
         let cartCopy = { ...cart };
-        delete cartCopy[item[0].productId];
+        delete cartCopy[product.productId];
         setCart(cartCopy);
+        setCartItems({});
       }
     } else {
       let itemNumberInCart = Number(cart[item[0].productId]) - 1;
@@ -99,9 +94,9 @@ const OneCart = ({ cartItems, setCart, cart, setTrigger , setCartItems}) => {
   }
 
   function saveForLater(cartItems) {
-    console.log(cart);
-    console.log(cartItems);
-    console.log(userCart);
+    // console.log(cart);
+    // console.log(cartItems);
+    // console.log(userCart);
     let userCartCopy = { ...userCart };
     let userCartObj = Object.keys(userCart);
 
@@ -110,21 +105,16 @@ const OneCart = ({ cartItems, setCart, cart, setTrigger , setCartItems}) => {
         ? (userCartCopy = {
             ...userCartCopy,
             [item[0].productId]:
-              Number(userCart[item[0].productId]) +
-              Number(item[1]),
+              Number(userCart[item[0].productId]) + Number(item[1]),
           })
-        : (userCartCopy = { ...userCartCopy, [item[0].productId] :item[1] });
-        console.log(userCartCopy);
-      });//[item[0].productId]: 
-      Promise.all([
-        updateUserOwnCart(userCartCopy, loggedIn.authId )
-        ,setCart({}), setCartItems(null)]).then(res=> setTrigger(prev=> !prev))
-        // ,
-        
-      // ,
-      //   setTrigger(prev=> !prev)
-      // ])
-      // .then(res=> navigate("/"))
+        : (userCartCopy = { ...userCartCopy, [item[0].productId]: item[1] });
+      console.log(userCartCopy);
+    }); 
+    Promise.all([
+      updateUserOwnCart(userCartCopy, loggedIn.authId),
+      setCart({}),
+      setCartItems(null)
+    ]).then((res) => setTrigger((prev) => !prev));
   }
 };
 
