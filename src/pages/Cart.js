@@ -11,8 +11,8 @@ import "../css/App.css";
 import { v4 as uid } from "uuid";
 import { AuthContext } from "../contexts/AuthContext";
 
-import OneCart from "./Cart/OneCart";
-import OwnCart from "./Cart/OwnCart.js";
+import OneCart from "../components/Cart/OneCart";
+import OwnCart from "../components/Cart/OwnCart.js";
 
 const Cart = () => {
   const { loggedIn } = useContext(AuthContext);

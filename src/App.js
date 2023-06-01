@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer";
+import Header from "./pages/Header";
+import Footer from "./pages/Footer";
 import "../src/css/App.css";
 import { useEffect, useState } from "react";
 import { AuthContext } from "./contexts/AuthContext";

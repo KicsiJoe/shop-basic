@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "../../css/Header.module.css";
-import { arrow_down } from "../../icon/icons";
+import styles from  "../css/Header.module.css";
+import { arrow_down } from "../icon/icons";
 import { NavLink } from "react-router-dom";
-import Modal from "../modal/Modal";
+import Modal from "./modal/Modal";
 
 import { useState } from "react";
 

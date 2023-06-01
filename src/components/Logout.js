@@ -4,11 +4,8 @@ import { AuthContext } from "../contexts/AuthContext";
 import { logout } from "../icon/icons";
 import {  useNavigate } from "react-router-dom";
 import style from "../css/Header.module.css";
-
 import { CartContext } from "../contexts/CartContext";
 import { UserCartContext } from "../contexts/UserCartContext.js";
-
-
 
 
 const Logout = () => {

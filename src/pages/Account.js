@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import styles from "../css/Forms.module.css"
-import Logout from "./Logout";
-import Forms from "./Forms";
+import Forms from "../components/Forms";
 import { AuthContext } from "../contexts/AuthContext";
 import Profile from "./Profile";
 import { useNavigate } from "react-router-dom";

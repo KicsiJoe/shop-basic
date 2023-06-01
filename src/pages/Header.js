@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import styles from "../../css/Header.module.css";
+import styles from "../css/Header.module.css"; 
 import {
   shop,
   heart_empty,
@@ -7,14 +7,14 @@ import {
   search,
   profile,
   cartIcon,
-} from "../../icon/icons";
-import Navbar_ul from "./Navbar_ul";
+} from "../icon/icons";
+import Navbar_ul from "../components/Navbar_ul";
 import { NavLink } from "react-router-dom";
-import Logout from "../Logout";
+import Logout from "../components/Logout";
 
-import { AuthContext } from "../../contexts/AuthContext";
-import { CartContext } from "../../contexts/CartContext";
-import { UserCartContext } from "../../contexts/UserCartContext";
+import { AuthContext } from "../contexts/AuthContext";
+import { CartContext } from "../contexts/CartContext";
+import { UserCartContext } from "../contexts/UserCartContext";
 
 const Header = () => {
   const { userCart, setUserCart, setTrigger } = useContext(UserCartContext);

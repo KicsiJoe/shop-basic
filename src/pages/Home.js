@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import main_pic from "../icon/flower_main.jpg";
 import "../css/Home.css";
-import Cards from "./Cards/Cards";
+import Cards from "../components/Cards/Cards";
 
 const Home = () => {
   return (

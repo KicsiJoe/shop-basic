@@ -1,5 +1,5 @@
 import React from "react";
-import style from "../../css/Admin.module.css"
+import style from  "../css/Admin.module.css";
 
 import { Link } from "react-router-dom";
 
