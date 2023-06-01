@@ -5,10 +5,10 @@ import  {Link} from "react-router-dom"
 const Modal = () => {
   return (
     <div className={style["modal-box"]}>
-      <div>
+      <div className={style.ul_box}>
         <ul>
           <li>
-            <Link className={style.modal_a}>SHOP CATEGORIES</Link>
+            <Link>SHOP CATEGORIES</Link>
           </li>
           <li>
             <Link>All</Link>

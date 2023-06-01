@@ -120,12 +120,10 @@ table td:nth-child(3) {
   height: 100%;
 }
 
-.pic_indicator > * , .pic_indicator {
+.pic_indicator > *,
+.pic_indicator {
   cursor: default;
-display: inline-block;
-
-
-
+  display: inline-block;
 }
 
 .pic_indicator {
@@ -134,10 +132,10 @@ display: inline-block;
   width: 1.2em;
   height: 1.2em;
   opacity: 0.4;
-
 }
 
-.pic_indicator svg, .pic_indicator svg path  {
+.pic_indicator svg,
+.pic_indicator svg path {
   cursor: default !important;
 }
 

@@ -9,6 +9,8 @@
   display: block;
   width: 100%;
   height: 30vw;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
 }
 
 .full_pic  .img_text {

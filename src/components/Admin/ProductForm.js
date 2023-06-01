@@ -12,7 +12,7 @@ import style from "../../css/Forms.module.css";
 
 import { v4 as uuid } from "uuid";
 import { AuthContext } from "../../contexts/AuthContext";
-import { checkInputs, getOnePicUrl, savePic } from "../../services/utilities";
+import { checkInputs, getOnePicUrl, savePic, timeFormatter } from "../../services/utilities";
 import {
   delAllPic,
   delUselessPics,
@@ -37,6 +37,7 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
         picName: "no_image.png",
       },
       authId: loggedIn.authId,
+      time: ""
     };
   }
 
@@ -51,6 +52,7 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
         picName: data.pic.picName,
       },
       authId: data.authId,
+      time: data.time
     };
   }
 
@@ -166,11 +168,13 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
   function submit(e) {
     e.preventDefault();
     let inputsNew;
-
+    let time = timeFormatter(  '-', ' ', ':', true)
+    console.log(time);
     if (text == "new") {
       if (newImage == null) {
         // inputsNew= {...inputs, pic : {picName: newImage.name, picUrl: "" }}
-        inputsNew = { ...inputs };
+        inputsNew = { ...inputs, time };
+        console.log(inputsNew);
         return addNewProductService(inputsNew)
           .then((itemId) => updateWithId(itemId, loggedIn.authId))
           .then((res) => navigate(nav))
@@ -178,7 +182,8 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
             alert(e);
           });
       } else {
-        inputsNew = { ...inputs, pic: { picName: newImage.name, picUrl: "" } };
+        inputsNew = { ...inputs, pic: { picName: newImage.name, picUrl: "" }, time  };
+        console.log(inputsNew);
         return addNewProductService(inputsNew)
           .then((itemId) => updateWithId(itemId, loggedIn.authId, setInputs))
           .then((res) => savePic(loggedIn.authId, res.name, newImage))
@@ -193,13 +198,14 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
 
     if (text == "edit") {
       if (newImage != null) {
-        inputsNew = { ...inputs, pic: { picName: newImage.name, picUrl: "" } };
+        inputsNew = { ...inputs, pic: { picName: newImage.name, picUrl: "" }};
+        console.log(inputsNew);
         savePic(loggedIn.authId, productId, newImage, inputsNew)
           .then((res) => {
             inputsNew = {
               ...inputs,
               pic: { picUrl: res.picUrl, picName: newImage.name },
-            };
+               time};
             setInputs(inputsNew);
             return inputsNew;
           })
@@ -209,6 +215,7 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
               productId: productId,
               picUrl: res.pic.picUrl,
               picName: res.pic.picName,
+              time : time
             })
           )
           // { authId, productId, picUrl: url, picName: fileName }
@@ -220,7 +227,7 @@ const ProductForm = ({ btn, text, nav, data, productId }) => {
             alert(e);
           });
       } else {
-        return editProductService(inputs, productId).then((res) =>
+        return editProductService({...inputs, time}, productId).then((res) =>
           navigate(nav)
         );
       }

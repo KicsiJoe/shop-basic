@@ -1,0 +1,51 @@
+.table_width_title {
+    height: min-content;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-content: flex-start;
+  }
+  
+  .title {
+    text-align: center;
+    text-decoration: underline wavy;
+  }
+
+
+.th_box {
+  min-width: 120px;
+  justify-content: center;
+  position: relative;
+}
+
+.th_box span:nth-child(1) {
+  padding: 0 20px;
+  white-space: nowrap;
+}
+.th_box span:nth-child(2) {
+  position: absolute;
+  right: 10px;
+  top: 0;
+}
+
+table > tbody tr:nth-child(even) {
+  background-color: lightgray;
+}
+
+table {
+  min-width: 70%;
+  margin: 0 auto;
+  align-self: flex-end;
+}
+table tr th {
+  border: 2px solid black;
+  /* width: minmax(max-content, 100px); */
+}
+
+table td:nth-child(1),
+table td:nth-child(4) {
+  text-align: center;
+}
+table td:nth-child(3) {
+  text-align: right;
+}

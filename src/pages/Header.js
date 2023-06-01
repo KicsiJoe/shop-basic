@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import styles from "../css/Header.module.css"; 
+import styles from "../css/Header.module.css";
 import {
   shop,
   heart_empty,
@@ -21,14 +21,12 @@ const Header = () => {
 
   const { loggedIn } = useContext(AuthContext);
   const { cart, setCart } = useContext(CartContext);
-  
+
   const [numberOfCard, setNumberOfCard] = useState(0);
 
   useEffect(() => {
     //Itt jarunk => headerben a kosarban mi jelenjen meg szam, ha be van lépve, vagy sem...
     if (loggedIn.authId) {
-      console.log("bejelentkezve");
-      console.log(Object.keys(userCart).length);
       setNumberOfCard(Object.keys(userCart).length);
     } else {
       setNumberOfCard(Object.keys(cart).length);
@@ -47,21 +45,22 @@ const Header = () => {
         <Navbar_ul />
         <div className={styles.icon_list}>
           {loggedIn?.userName ? (
-            <div className={styles.icon_boxes}>
-              <span className={styles.icon}>
-                <Logout />
-              </span>
-            </div>
+            <>
+              <div className={styles.icon_boxes}>
+                <span className={styles.icon}>
+                  <Logout />
+                </span>
+              </div>
+              <div className={styles.icon_boxes}>
+                <span className={styles.icon}>
+                  <NavLink to="/favorites">{heart_empty}</NavLink>
+                </span>
+                <span className={styles.numb}>0</span>
+              </div>
+            </>
           ) : (
             ""
           )}
-          <div className={styles.icon_boxes}>
-            <span className={styles.icon}>
-              <NavLink to="/favorites">{heart_empty}</NavLink>
-            </span>
-            <span className={styles.numb}>0</span>
-          </div>
-
           <div className={styles.icon_boxes}>
             <span className={styles.icon}>
               <NavLink to="/cart">{cartIcon}</NavLink>

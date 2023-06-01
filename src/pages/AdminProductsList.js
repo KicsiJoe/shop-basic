@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import {
   delProductService,
   getProductsData,
-} from "../../services/admin-service";
-import style from "../../css/Admin.module.css";
+} from "../services/admin-service";
+import style from "../css/Admin.module.css";
 import { v4 as uuid } from "uuid";
 import {
   doubleLeft,
@@ -15,10 +15,10 @@ import {
   arrow_up_filter,
   delete_icon,
   with_img,
-} from "../../icon/icons.js";
+} from "../icon/icons.js";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthContext.js";
+import { AuthContext } from "../contexts/AuthContext.js";
 
 const AdminProductsList = () => {
   const { loggedIn } = useContext(AuthContext);
@@ -64,10 +64,10 @@ const AdminProductsList = () => {
     filteredLength = filtered.length;
     if (searchingField != "") {
       filtered = filtered.filter(
-        (arr) =>
-          arr[1].title.includes(searchingField) ||
-          arr[1]["item-number"].includes(searchingField) ||
-          arr[1].price.includes(searchingField)
+        ([id,obj]) =>
+          obj.title.includes(searchingField) ||
+          obj["item-number"].includes(searchingField) ||
+          obj.price.includes(searchingField)
       );
       filteredLength = filtered.length;
     }
@@ -88,6 +88,7 @@ const AdminProductsList = () => {
           <label htmlFor="">Searching: </label>
           <input type="text" value={searchingField} onChange={searching} />
         </div>
+        
         <table>
           <thead>
             <tr>
@@ -124,24 +125,24 @@ const AdminProductsList = () => {
             </tr>
           </thead>
           <tbody>
-            {filtered?.map((arr) => (
+            {filtered?.map(([id, obj]) => (
               <tr key={uuid()}>
-                <td>{arr[1].title}</td>
-                <td>{arr[1]["item-number"]}</td>
+                <td>{obj.title}</td>
+                <td>{obj["item-number"]}</td>
                 <td>
-                  <span>{arr[1].price}</span> <span>EUR</span>
+                  <span>{obj.price}</span> <span>EUR</span>
                 </td>
                 <td className={style.links_box}>
-                  {arr[1].pic.picUrl && arr[1].pic.picName != "no_image.png"? (
+                  {obj.pic.picUrl && obj.pic.picName != "no_image.png"? (
                     <span className={style.pic_indicator}>{with_img}</span>
                   ) : (
                     ""
                   )}
-                  <Link to={`/admin/product/edit/${arr[0]}`}>Edit</Link> |
-                  <Link to={`/admin/product/del/${arr[0]}`}>Delete</Link> |
+                  <Link to={`/admin/product/edit/${id}`}>Edit</Link> |
+                  <Link to={`/admin/product/del/${id}`}>Delete</Link> |
                   <span
                     onClick={() =>
-                      delProductService(arr[0], loggedIn.authId).then((res) =>
+                      delProductService(id, loggedIn.authId).then((res) =>
                         setPushed((prev) => !prev)
                       )
                     }

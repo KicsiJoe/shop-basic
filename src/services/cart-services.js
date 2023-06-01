@@ -1,9 +1,11 @@
 import {
+  cartOrderFirebase,
   getCartItemsFirebase,
   getUserCartFirebase,
   updateUserOwnCartFirebase,
 } from "../repositories/cart-repo";
 import { getProductsData } from "./admin-service";
+import { timeFormatter } from "./utilities";
 
 export const getCartItems = (cart, callback) => {
   return getCartItemsFirebase()
@@ -77,4 +79,12 @@ export const getUserCartWithModification = (userId, callback, callback2) => {
 
 export const updateUserOwnCart = (cartCopy, userId) => {
   return updateUserOwnCartFirebase(cartCopy, userId);
+};
+
+export const cartOrder = (orderObj, userId) => {
+  return cartOrderFirebase(
+    orderObj,
+    userId,
+    timeFormatter("-", " ", ":", true)
+  )
 };

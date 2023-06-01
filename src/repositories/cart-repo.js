@@ -9,11 +9,28 @@ export const getUserCartFirebase = (userId) => {
 };
 
 export const updateUserOwnCartFirebase = (cartCopy, userId) => {
-  console.log(cartCopy);
-  console.log(userId);
   return fetch(`${URL}/users/${userId}/cart.json`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(cartCopy),
   }).then((res) => res.json())
 };
+
+export const cartOrderFirebase =(orderObj, userId, time)=>{
+
+  let obj = {orderItems: orderObj, time, userId}
+
+  return fetch(`${URL}/orders.json`, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(obj)
+  }).then(res=> res.json()).then((res) => saveId("/orders", res.name));
+}
+
+export const saveId =(path,id)=>{
+  return fetch(`${URL}/${path}/${id}.json`, {
+    method: "PATCH",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({orderId: id})
+  } )
+}

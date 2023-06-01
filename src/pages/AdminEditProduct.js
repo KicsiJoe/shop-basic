@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import ProductForm from "./ProductForm.js";
+import ProductForm from "../components/Admin/ProductForm.js";
 import { useParams } from "react-router-dom";
-import { getProductsData } from "../../services/admin-service";
-import style from '../../css/Admin.module.css'
+import { getProductsData } from "../services/admin-service.js";
+import style from "../css/Admin.module.css";
 
 const AdminEditProduct = () => {
   const { productId } = useParams();

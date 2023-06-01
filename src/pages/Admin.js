@@ -10,8 +10,6 @@ const Admin = () => {
       <div className={style.admin_box}>
         <Link to={"/admin/new-product"}>New product</Link>
         <Link to={"/admin/products/1/title/asc"}>Products list</Link> 
-        {/* <Link to={"/admin/product/edit/:productId"}>Edit product</Link>
-        <Link to={"/admin/product/del/:productId"}>Delete product</Link> */}
       </div>
     </section>
   );

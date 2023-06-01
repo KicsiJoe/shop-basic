@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from  "../css/Header.module.css";
 import { arrow_down } from "../icon/icons";
 import { NavLink } from "react-router-dom";
 import Modal from "./modal/Modal";
 
+
 import { useState } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Navbar_ul = () => {
+  const {loggedIn} = useContext(AuthContext)
   const [showModal, setshowModal] = useState(false);
-
   return (
     <ul className={styles.nav_list}>
       <li>
@@ -41,6 +43,15 @@ const Navbar_ul = () => {
           ABOUT US
         </NavLink>
       </li>
+      {loggedIn?.authId ? <li>
+        <NavLink
+          className={({ isActive }) => (isActive ? styles.my_active : "")}
+          to="/orders"
+        >
+          ORDERS
+        </NavLink>
+      </li> : ""}
+      
     </ul>
   );
 };

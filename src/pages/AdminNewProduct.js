@@ -1,6 +1,6 @@
 import React from "react";
-import ProductForm from "./ProductForm.js";
-import style from "../../css/Admin.module.css";
+import ProductForm from "../components/Admin/ProductForm.js";
+import style from "../css/Admin.module.css";
 
 const AdminNewProduct = () => {
   return (

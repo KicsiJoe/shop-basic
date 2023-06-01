@@ -18,7 +18,7 @@ const Cart = () => {
   const { loggedIn } = useContext(AuthContext);
 
   //Items in CartContext:
-  const { cart, setCart, setTriggerHeader  } = useContext(CartContext); //{}
+  const { cart, setCart, setTriggerHeader } = useContext(CartContext); //{}
   //CartContext Items with full item object+quantity:
   const [cartItems, setCartItems] = useState(null);
 
@@ -31,14 +31,11 @@ const Cart = () => {
   const [trigger, setTrigger] = useState(true);
 
   useEffect(() => {
-    console.log("frissitem a cartot - ez lefut, ha belenyulok!!!");
-
     if (Object.keys(cart).length != 0) {
       getCartItems(cart, setCartItems);
     }
-    if(loggedIn.authId){
-      console.log("benne");
-      setTriggerHeader(prev=> !prev)
+    if (loggedIn.authId) {
+      setTriggerHeader((prev) => !prev);
     }
   }, [cart, userCart, trigger]);
 

@@ -6,15 +6,17 @@ import Account from "./pages/Account";
 import About from "./pages/About";
 import Search from "./pages/Search";
 import Favorites from "./pages/Favorites";
-import {Auth, AuthAdmin }from "./components/Auth";
+import { AuthAdmin, AuthAnonym } from "./components/Auth";
 import Admin from "./pages/Admin";
-import AdminProductsList from "./components/Admin/AdminProductsList";
 import AdminDelProduct from "./components/Admin/AdminDelProduct";
-import AdminEditProduct from "./components/Admin/AdminEditProduct"
-import AdminNewProduct from "./components/Admin/AdminNewProduct"
 import Home from "./pages/Home";
 import Themes from "./pages/Themes";
-import Cart from "./pages/Cart.js";
+import Cart from "./pages/Cart";
+import AdminProductsList from "./pages/AdminProductsList";
+import AdminNewProduct from "./pages/AdminNewProduct";
+import AdminEditProduct from "./pages/AdminEditProduct";
+import AdminBasic from "./pages/AdminBasic";
+import Orders from "./pages/Orders";
 
 const router = createBrowserRouter([
   {
@@ -26,20 +28,45 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
+      { path: "/orders", element: <AuthAnonym><Orders /></AuthAnonym> },
       { path: "/search", element: <Search /> },
       { path: "/favorites", element: <Favorites /> },
       { path: "/themes", element: <Themes /> },
       { path: "/cart", element: <Cart /> },
       { path: "/account", element: <Account /> },
-      { path: "/admin", element: <AuthAdmin><Admin /> </AuthAdmin>},
-      { path: "/admin/products/:pageId/:sortBy/:sortType", element: <AuthAdmin><AdminProductsList /> </AuthAdmin>},
-      { path: "/admin/new-product", element: <AuthAdmin><AdminNewProduct /> </AuthAdmin>},
-      { path: "/admin/product/edit/:productId", element: <AuthAdmin><AdminEditProduct /> </AuthAdmin>},
-      { path: "/admin/product/del/:productId", element: <AuthAdmin><AdminDelProduct /> </AuthAdmin>},
+      {
+        path: "/admin",
+        element: (
+          <AuthAdmin>
+            <AdminBasic />
+          </AuthAdmin>
+        ),
+        children: [
+          {
+            path: "/admin",
+            element: <Admin />,
+          },
+          {
+            path: "/admin/products/:pageId/:sortBy/:sortType",
+            element: <AdminProductsList />,
+          },
+          {
+            path: "/admin/new-product",
+            element: <AdminNewProduct />,
+          },
+          {
+            path: "/admin/product/edit/:productId",
+            element: <AdminEditProduct />,
+          },
+          {
+            path: "/admin/product/del/:productId",
+            element: <AdminDelProduct />,
+          },
+        ],
+      },
     ],
   },
 ]);
-  
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

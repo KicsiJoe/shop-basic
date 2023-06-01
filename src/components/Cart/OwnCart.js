@@ -3,8 +3,9 @@ import style from "../../css/Cart.module.css";
 import "../../css/App.css";
 import { v4 as uid } from "uuid";
 import { AuthContext } from "../../contexts/AuthContext";
-import { updateUserOwnCart } from "../../services/cart-services";
+import { cartOrder, updateUserOwnCart } from "../../services/cart-services";
 import { UserCartContext } from "../../contexts/UserCartContext";
+import { cardObjWithIdToFBform } from "../../services/utilities";
 
 const OwnCart = ({ userCart, userFirebaseCart, setTrigger }) => {
   const { loggedIn } = useContext(AuthContext);
@@ -113,6 +114,8 @@ const OwnCart = ({ userCart, userFirebaseCart, setTrigger }) => {
   }
   function checkout() {
     if (loggedIn.authId) {
+      console.log(userCart);
+      cartOrder(cardObjWithIdToFBform(userCart), loggedIn.authId ).then(res=> updateUserOwnCart({}, loggedIn.authId)).then(res=> setTrigger((prev) => !prev))
       alert("rendeles van!");
     } else alert("be kell jelentkezni!");
   }

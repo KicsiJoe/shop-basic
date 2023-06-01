@@ -1,0 +1,132 @@
+{
+  "products": {
+    "-NVngFzYgp_Z_v8U1GtC": {
+      "authId": "gllzgROyTsXg4Pu2TOMrtqCKDMD3",
+      "item-number": "1",
+      "pic": {
+        "picName": "no_image.png",
+        "picUrl": "https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FstorePic%2FgllzgROyTsXg4Pu2TOMrtqCKDMD3%2F-NVngFzYgp_Z_v8U1GtC%2Fno_image.png?alt=media&token=63451652-6c0b-446d-824e-ddda3c36b108"
+      },
+      "price": "1",
+      "productId": "-NVngFzYgp_Z_v8U1GtC",
+      "time": "2023-06-01 20:21:49",
+      "title": "1"
+    },
+    "-NVnh64gwRyHO0SVkyRE": {
+      "authId": "gllzgROyTsXg4Pu2TOMrtqCKDMD3",
+      "item-number": "2",
+      "pic": {
+        "picName": "no_image.png",
+        "picUrl": "https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FstorePic%2FgllzgROyTsXg4Pu2TOMrtqCKDMD3%2F-NVnh64gwRyHO0SVkyRE%2Fno_image.png?alt=media&token=2530a2ac-4ec1-4403-8774-da93342c9f5c"
+      },
+      "price": "2",
+      "productId": "-NVnh64gwRyHO0SVkyRE",
+      "time": "2023-06-01 20:21:59",
+      "title": "2"
+    },
+    "-NVnwSHNX2NtX3ernzlC": {
+      "authId": "gllzgROyTsXg4Pu2TOMrtqCKDMD3",
+      "item-number": "3",
+      "pic": {
+        "picName": "no_image.png",
+        "picUrl": "https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FstorePic%2FgllzgROyTsXg4Pu2TOMrtqCKDMD3%2F-NVnwSHNX2NtX3ernzlC%2Fno_image.png?alt=media&token=d57289d1-4813-47d2-8d03-a25e5e864527"
+      },
+      "price": "3",
+      "productId": "-NVnwSHNX2NtX3ernzlC",
+      "time": "2023-06-01 20:22:02",
+      "title": "3"
+    },
+    "-NW7tqVGoX8qZ3Cig6PO": {
+      "authId": "gllzgROyTsXg4Pu2TOMrtqCKDMD3",
+      "item-number": "4",
+      "pic": {
+        "picName": "no_image.png",
+        "picUrl": "https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FnoImg%2Fno_image.png?alt=media&token=a4dc5986-5d73-4fb7-b4c3-52de9cda1136"
+      },
+      "price": "4",
+      "productId": "-NW7tqVGoX8qZ3Cig6PO",
+      "time": "2023-06-01 20:22:05",
+      "title": "4"
+    },
+    "-NWH6w17O_LJp8sM2NZz": {
+      "authId": "gllzgROyTsXg4Pu2TOMrtqCKDMD3",
+      "item-number": "5",
+      "pic": {
+        "picName": "no_image.png",
+        "picUrl": "https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FnoImg%2Fno_image.png?alt=media&token=a4dc5986-5d73-4fb7-b4c3-52de9cda1136"
+      },
+      "price": "5",
+      "productId": "-NWH6w17O_LJp8sM2NZz",
+      "time": "2023-06-01 20:22:07",
+      "title": "5"
+    },
+    "-NWH6y2oK4o_AJaDVHvT": {
+      "authId": "gllzgROyTsXg4Pu2TOMrtqCKDMD3",
+      "item-number": "6",
+      "pic": {
+        "picName": "no_image.png",
+        "picUrl": "https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FnoImg%2Fno_image.png?alt=media&token=a4dc5986-5d73-4fb7-b4c3-52de9cda1136"
+      },
+      "price": "60",
+      "productId": "-NWH6y2oK4o_AJaDVHvT",
+      "time": "2023-06-01 21:43:25",
+      "title": "6"
+    },
+    "-NWH7-xCsa0qhvdosgLd": {
+      "authId": "gllzgROyTsXg4Pu2TOMrtqCKDMD3",
+      "item-number": "7",
+      "pic": {
+        "picName": "no_image.png",
+        "picUrl": "https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FnoImg%2Fno_image.png?alt=media&token=a4dc5986-5d73-4fb7-b4c3-52de9cda1136"
+      },
+      "price": "7",
+      "productId": "-NWH7-xCsa0qhvdosgLd",
+      "time": "2023-06-01 20:22:14",
+      "title": "7"
+    },
+    "-NWsBNkT9TAyH0W5oCJU": {
+      "authId": "gllzgROyTsXg4Pu2TOMrtqCKDMD3",
+      "item-number": "43",
+      "pic": {
+        "picName": "no_image.png",
+        "picUrl": "https://firebasestorage.googleapis.com/v0/b/shop-project-8783c.appspot.com/o/images%2FnoImg%2Fno_image.png?alt=media&token=a4dc5986-5d73-4fb7-b4c3-52de9cda1136"
+      },
+      "price": "321",
+      "productId": "-NWsBNkT9TAyH0W5oCJU",
+      "time": "2023-06-01 20:22:20",
+      "title": "32"
+    }
+  },
+  "users": {
+    "BwfTLoB483fglrorlglWDdZ9rpX2": {
+      "authId": "BwfTLoB483fglrorlglWDdZ9rpX2",
+      "company": true,
+      "email": "comp@company.com",
+      "role": "company",
+      "userName": "Company_01"
+    },
+    "gllzgROyTsXg4Pu2TOMrtqCKDMD3": {
+      "authId": "gllzgROyTsXg4Pu2TOMrtqCKDMD3",
+      "cart": {
+        "-NVnh64gwRyHO0SVkyRE": 1,
+        "-NW7tqVGoX8qZ3Cig6PO": 2,
+        "-NWs8dP7sqx5A5PKKNeO": 2
+      },
+      "company": false,
+      "email": "admin@admin.hu",
+      "role": "admin",
+      "userName": "Admin"
+    },
+    "rtlpjDncu6RjCBHF3pbt9xce9OS2": {
+      "authId": "rtlpjDncu6RjCBHF3pbt9xce9OS2",
+      "cart": {
+        "-NVngFzYgp_Z_v8U1GtC": 4,
+        "-NVnh64gwRyHO0SVkyRE": 5
+      },
+      "company": false,
+      "email": "teszt@teszt.hu",
+      "role": "user",
+      "userName": "teszt"
+    }
+  }
+}
