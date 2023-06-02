@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import style from "../css/Orders.module.css";
-import { getOrders } from "../services/orders";
+import { delOrder, getOrders } from "../services/orders";
 import { v4 as uuid } from "uuid";
 import { Link } from "react-router-dom";
 import { delete_icon } from "../icon/icons";
@@ -11,13 +11,14 @@ const Orders = () => {
   const { loggedIn } = useContext(AuthContext);
   const [orders, setOrders] = useState(null);
   const [users, setUsers] = useState(null);
+  const [pushed, setPushed] = useState(false);
   console.log(users);
 
   useEffect(() => {
     if (loggedIn?.authId) {
       getOrders(loggedIn?.role, loggedIn?.authId).then((res) => setOrders(res));
     }
-  }, []);
+  }, [pushed]);
 
   useEffect(() => {
     getUsersNameWithId().then((res) => setUsers(res));
@@ -40,7 +41,7 @@ const Orders = () => {
                 {/* {arrow_status("title")} */}
               </span>
             </th>
-            {loggedIn?.role == "admin" ? (
+            {loggedIn && loggedIn?.role == "admin" ? (
               <th
                 className={style.th_box}
                 // onClick={() => change_filter("item-number")}
@@ -74,16 +75,16 @@ const Orders = () => {
           </tr>
         </thead>
         <tbody>
-          {orders?.map(({ orderId, orderItems, time, userId }) => (
+          {orders && orders?.map(({ orderId, orderItems, time, userId }) => (
             <tr key={uuid()}>
               <td>{orderId}</td>
 
-              {loggedIn?.role == "admin" ? <td>{(Object.values(users?.find(item=> item[userId] != undefined)))[0]}</td> : ""}
+              {(loggedIn && users) && loggedIn?.role == "admin" ? <td>{(Object.values(users?.find(item=> item[userId] != undefined)))[0]}</td> : ""}
               <td>Total price <span>EUR</span></td>
               <td className={style.list_of_items}>
                 <ul>
                   {Object.entries(orderItems).map(([id, numb]) => (
-                    <li> {`${id} : ${numb}`} pcs </li>
+                    <li key={uuid()}> {`${id} : ${numb}`} pcs </li>
                   ))}
                 </ul>
               </td>
@@ -95,11 +96,11 @@ const Orders = () => {
                   <Link to={`/orders/edit/${""}`}>Edit</Link> |
                   <Link to={`/orders/del/${""}`}>Delete</Link> |
                   <span
-                    // onClick={() =>
-                    //   delProductService(id, loggedIn.authId).then((res) =>
-                    //     setPushed((prev) => !prev)
-                    //   )
-                    // }
+                    onClick={() =>
+                      delOrder(orderId, userId).then((res) =>
+                        setPushed((prev) => !prev)
+                      )
+                    }
                     className={style.del_icon}
                   >
                     {delete_icon}
