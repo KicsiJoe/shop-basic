@@ -114,7 +114,6 @@ const OwnCart = ({ userCart, userFirebaseCart, setTrigger }) => {
   }
   function checkout() {
     if (loggedIn.authId) {
-      console.log(userCart);
       cartOrder(cardObjWithIdToFBform(userCart), loggedIn.authId ).then(res=> updateUserOwnCart({}, loggedIn.authId)).then(res=> setTrigger((prev) => !prev))
       alert("rendeles van!");
     } else alert("be kell jelentkezni!");

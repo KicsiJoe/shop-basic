@@ -13,24 +13,35 @@ export const updateUserOwnCartFirebase = (cartCopy, userId) => {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(cartCopy),
-  }).then((res) => res.json())
+  }).then((res) => res.json());
 };
 
-export const cartOrderFirebase =(orderObj, userId, time)=>{
-
-  let obj = {orderItems: orderObj, time, userId}
+export const cartOrderFirebase = (orderObj, userId, time) => {
+  let obj = { orderItems: orderObj, time, userId };
 
   return fetch(`${URL}/orders.json`, {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(obj)
-  }).then(res=> res.json()).then((res) => saveId("/orders", res.name));
-}
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(obj),
+  })
+    .then((res) => res.json())
+    .then((res) => saveId("/orders", res.name)).then(id=> saveOrderToUser(`users/${userId}/orders`, time, id));
+};
 
-export const saveId =(path,id)=>{
+export const saveId = (path, id) => {
   return fetch(`${URL}/${path}/${id}.json`, {
     method: "PATCH",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({orderId: id})
-  } )
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ orderId: id }),
+  }).then(res=> res.json()).then(res=> id)
+};
+
+export const saveOrderToUser=(path, time, id) =>{
+  let obj = {[id] : time}
+ return fetch(`${URL}/${path}.json`, {
+  method: "PATCH",
+  headers: {"Content-Type":"application/json"},
+  body: JSON.stringify(obj)
+
+ }).then(res=>res.json())
 }

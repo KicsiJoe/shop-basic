@@ -9,7 +9,6 @@ import { updateUserOwnCart } from "../../services/cart-services";
 // import {  useNavigate } from "react-router-dom";
 
 const OneCart = ({ cartItems, setCart, cart, setTrigger, setCartItems }) => {
-  console.log(cart);
   const { loggedIn } = useContext(AuthContext);
   const { userCart, setUserCart } = useContext(UserCartContext);
 
@@ -108,12 +107,11 @@ const OneCart = ({ cartItems, setCart, cart, setTrigger, setCartItems }) => {
               Number(userCart[item[0].productId]) + Number(item[1]),
           })
         : (userCartCopy = { ...userCartCopy, [item[0].productId]: item[1] });
-      console.log(userCartCopy);
-    }); 
+    });
     Promise.all([
       updateUserOwnCart(userCartCopy, loggedIn.authId),
       setCart({}),
-      setCartItems(null)
+      setCartItems(null),
     ]).then((res) => setTrigger((prev) => !prev));
   }
 };
