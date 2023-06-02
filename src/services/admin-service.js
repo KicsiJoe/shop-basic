@@ -2,6 +2,7 @@ import {
   addNewProductFirebase,
   delProductServiceFirebase,
   editProductServiceFirebase,
+  getUsersNameWithIdFirebase,
 } from "../repositories/admin";
 import { updateItemFirebase, updateWithIdFirebase } from "../repositories/crud";
 import { getProducts } from "../repositories/getProduct";
@@ -80,5 +81,16 @@ export const updateWithId = (itemId, authId, setInputs) => {
       setInputs((prev) => ({ ...prev, productId: itemId }));
     }
     return { name: itemId };
+  });
+};
+
+export const getUsersNameWithId = () => {
+  return getUsersNameWithIdFirebase().then((res) => {
+    let fullArr = Object.entries(res);
+    let authIdWithUserName = [];
+    fullArr.forEach(([authId, obj]) => {
+      authIdWithUserName.push({ [authId]: obj.userName });
+    });
+    return authIdWithUserName;
   });
 };

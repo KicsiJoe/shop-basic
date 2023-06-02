@@ -23,6 +23,9 @@ export const delProductServiceFirebase = (productId) => {
   );
 };
 
+export const getUsersNameWithIdFirebase=()=>{
+  return fetch(`${URL}/users.json`).then(res=> res.json())
+}
 
 
 

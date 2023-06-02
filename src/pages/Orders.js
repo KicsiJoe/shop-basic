@@ -4,17 +4,24 @@ import style from "../css/Orders.module.css";
 import { getOrders } from "../services/orders";
 import { v4 as uuid } from "uuid";
 import { Link } from "react-router-dom";
-import { delete_icon } from "../icon/icons.js";
+import { delete_icon } from "../icon/icons";
+import { getUsersNameWithId } from "../services/admin-service";
 
 const Orders = () => {
   const { loggedIn } = useContext(AuthContext);
   const [orders, setOrders] = useState(null);
-  console.log(orders);
+  const [users, setUsers] = useState(null);
+  console.log(users);
+
   useEffect(() => {
     if (loggedIn?.authId) {
       getOrders(loggedIn?.role, loggedIn?.authId).then((res) => setOrders(res));
     }
   }, []);
+
+  useEffect(() => {
+    getUsersNameWithId().then((res) => setUsers(res));
+  }, [orders]);
 
   return (
     <section className="main-container">
@@ -71,32 +78,33 @@ const Orders = () => {
             <tr key={uuid()}>
               <td>{orderId}</td>
 
-              {loggedIn?.role == "admin" ? <td>{userId}</td> : ""}
-              <td>Total price</td>
+              {loggedIn?.role == "admin" ? <td>{(Object.values(users?.find(item=> item[userId] != undefined)))[0]}</td> : ""}
+              <td>Total price <span>EUR</span></td>
               <td className={style.list_of_items}>
                 <ul>
                   {Object.entries(orderItems).map(([id, numb]) => (
                     <li> {`${id} : ${numb}`} pcs </li>
                   ))}
                 </ul>
-               
               </td>
               <td>
                 <span>{time}</span>
               </td>
               <td className={style.links_box}>
-                <Link to={`/orders/edit/${""}`}>Edit</Link> |
-                <Link to={`/orders/del/${""}`}>Delete</Link> |
-                <span
-                  // onClick={() =>
-                  //   delProductService(id, loggedIn.authId).then((res) =>
-                  //     setPushed((prev) => !prev)
-                  //   )
-                  // }
-                  className={style.del_icon}
-                >
-                  {delete_icon}
-                </span>
+                <div>
+                  <Link to={`/orders/edit/${""}`}>Edit</Link> |
+                  <Link to={`/orders/del/${""}`}>Delete</Link> |
+                  <span
+                    // onClick={() =>
+                    //   delProductService(id, loggedIn.authId).then((res) =>
+                    //     setPushed((prev) => !prev)
+                    //   )
+                    // }
+                    className={style.del_icon}
+                  >
+                    {delete_icon}
+                  </span>
+                </div>
               </td>
             </tr>
           ))}
