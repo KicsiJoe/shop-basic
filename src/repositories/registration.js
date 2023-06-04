@@ -8,5 +8,5 @@ export const saveNewUserToFirebase = (userName, localId, email,company, role) =>
     body: JSON.stringify(userObj),
   })
     .then((res) => res.json())
-    .then((res) => ({ userName, email, company, role }));
+    .then((res) => ({ userName,authId: localId, email, company, role }));
 };

@@ -12,6 +12,7 @@ const Navbar_ul = () => {
   const {loggedIn} = useContext(AuthContext)
   const [showModal, setshowModal] = useState(false);
   return (
+
     <ul className={styles.nav_list}>
       <li>
         <NavLink
@@ -53,6 +54,7 @@ const Navbar_ul = () => {
       </li> : ""}
       
     </ul>
+   
   );
 };
 

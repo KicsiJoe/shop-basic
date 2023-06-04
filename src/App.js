@@ -65,6 +65,7 @@ function App() {
           >
             <div className="main-container">
               <Header />
+
               <div>
                 <Outlet className="outlet_container" />
               </div>

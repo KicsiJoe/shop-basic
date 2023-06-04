@@ -1,18 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import style from "../css/Orders.module.css";
-import { delOrder, getOrders } from "../services/orders";
+import { delOrder, getOrders, oneOrderPrice } from "../services/orders";
 import { v4 as uuid } from "uuid";
 import { Link } from "react-router-dom";
 import { delete_icon } from "../icon/icons";
 import { getUsersNameWithId } from "../services/admin-service";
+import { ProductsContext } from "../contexts/ProductsContext";
 
 const Orders = () => {
   const { loggedIn } = useContext(AuthContext);
+  const { productsList } = useContext(ProductsContext);
   const [orders, setOrders] = useState(null);
   const [users, setUsers] = useState(null);
   const [pushed, setPushed] = useState(false);
-  console.log(users);
+  console.log(orders);
 
   useEffect(() => {
     if (loggedIn?.authId) {
@@ -75,40 +77,54 @@ const Orders = () => {
           </tr>
         </thead>
         <tbody>
-          {orders && orders?.map(({ orderId, orderItems, time, userId }) => (
-            <tr key={uuid()}>
-              <td>{orderId}</td>
-
-              {(loggedIn && users) && loggedIn?.role == "admin" ? <td>{(Object.values(users?.find(item=> item[userId] != undefined)))[0]}</td> : ""}
-              <td>Total price <span>EUR</span></td>
-              <td className={style.list_of_items}>
-                <ul>
-                  {Object.entries(orderItems).map(([id, numb]) => (
-                    <li key={uuid()}> {`${id} : ${numb}`} pcs </li>
-                  ))}
-                </ul>
-              </td>
-              <td>
-                <span>{time}</span>
-              </td>
-              <td className={style.links_box}>
-                <div>
-                  <Link to={`/orders/edit/${""}`}>Edit</Link> |
-                  <Link to={`/orders/del/${""}`}>Delete</Link> |
-                  <span
-                    onClick={() =>
-                      delOrder(orderId, userId).then((res) =>
-                        setPushed((prev) => !prev)
-                      )
+          {orders &&
+            orders?.map(({ orderId, orderItems, time, userId }) => (
+              <tr key={uuid()}>
+                <td>{orderId}</td>
+                {loggedIn && users && loggedIn?.role == "admin" ? (
+                  <td>
+                    {
+                      Object.values(
+                        users?.find((item) => item[userId] != undefined)
+                      )[0]
                     }
-                    className={style.del_icon}
-                  >
-                    {delete_icon}
-                  </span>
-                </div>
-              </td>
-            </tr>
-          ))}
+                  </td>
+                ) : (
+                  ""
+                )}
+
+                <td>
+                  {oneOrderPrice(orderItems, productsList)} <span>EUR</span>
+                </td>
+
+                <td className={style.list_of_items}>
+                  <ul>
+                    {Object.entries(orderItems).map(([id, numb]) => (
+                      <li key={uuid()}> {`${id} : ${numb}`} pcs </li>
+                    ))}
+                  </ul>
+                </td>
+                <td>
+                  <span>{time}</span>
+                </td>
+                <td className={style.links_box}>
+                  <div>
+                    <Link to={`/orders/edit/${""}`}>Edit</Link> |
+                    <Link to={`/orders/del/${""}`}>Delete</Link> |
+                    <span
+                      onClick={() =>
+                        delOrder(orderId, userId).then((res) =>
+                          setPushed((prev) => !prev)
+                        )
+                      }
+                      className={style.del_icon}
+                    >
+                      {delete_icon}
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </section>

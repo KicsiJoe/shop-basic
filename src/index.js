@@ -28,24 +28,28 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
-      { path: "/orders", element: <AuthAnonym><Orders /></AuthAnonym> },
+      {
+        path: "/orders",
+        element: (
+          <AuthAnonym>
+            <Orders />
+          </AuthAnonym>
+        ),
+      },
       { path: "/search", element: <Search /> },
       { path: "/favorites", element: <Favorites /> },
       { path: "/themes", element: <Themes /> },
       { path: "/cart", element: <Cart /> },
       { path: "/account", element: <Account /> },
+
       {
         path: "/admin",
         element: (
           <AuthAdmin>
-            <AdminBasic />
+            <Admin />
           </AuthAdmin>
         ),
         children: [
-          {
-            path: "/admin",
-            element: <Admin />,
-          },
           {
             path: "/admin/products/:pageId/:sortBy/:sortType",
             element: <AdminProductsList />,

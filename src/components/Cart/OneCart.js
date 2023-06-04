@@ -11,6 +11,7 @@ import { updateUserOwnCart } from "../../services/cart-services";
 const OneCart = ({ cartItems, setCart, cart, setTrigger, setCartItems }) => {
   const { loggedIn } = useContext(AuthContext);
   const { userCart, setUserCart } = useContext(UserCartContext);
+  console.log(loggedIn);
 
   const [total, setTotal] = useState(0);
 

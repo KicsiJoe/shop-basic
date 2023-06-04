@@ -15,6 +15,7 @@ import Logout from "../components/Logout";
 import { AuthContext } from "../contexts/AuthContext";
 import { CartContext } from "../contexts/CartContext";
 import { UserCartContext } from "../contexts/UserCartContext";
+import AdminBasic from "./AdminBasic";
 
 const Header = () => {
   const { userCart, setUserCart, setTrigger } = useContext(UserCartContext);
@@ -34,53 +35,56 @@ const Header = () => {
   }, [cart, userCart, setTrigger]);
 
   return (
-    <div className={styles.header_box}>
-      <nav className={styles.navigation_container}>
-        <NavLink to="/" id="a_logo">
-          <div className={styles.logo}>
-            <div className={styles.logo_icon}>{shop} </div>
-            <div>Logo</div>
-          </div>
-        </NavLink>
-        <Navbar_ul />
-        <div className={styles.icon_list}>
-          {loggedIn?.userName ? (
-            <>
-              <div className={styles.icon_boxes}>
-                <span className={styles.icon}>
-                  <Logout />
-                </span>
-              </div>
-              <div className={styles.icon_boxes}>
-                <span className={styles.icon}>
-                  <NavLink to="/favorites">{heart_empty}</NavLink>
-                </span>
-                <span className={styles.numb}>0</span>
-              </div>
-            </>
-          ) : (
-            ""
-          )}
-          <div className={styles.icon_boxes}>
-            <span className={styles.icon}>
-              <NavLink to="/cart">{cartIcon}</NavLink>
-            </span>
-            <span className={styles.numb}>{numberOfCard}</span>
-          </div>
+    <>
+      <div className={styles.header_box}>
+        <nav className={styles.navigation_container}>
+          <NavLink to="/" id="a_logo">
+            <div className={styles.logo}>
+              <div className={styles.logo_icon}>{shop} </div>
+              <div>Logo</div>
+            </div>
+          </NavLink>
+          <Navbar_ul />
+          <div className={styles.icon_list}>
+            {loggedIn?.userName ? (
+              <>
+                <div className={styles.icon_boxes}>
+                  <span className={styles.icon}>
+                    <Logout />
+                  </span>
+                </div>
+                <div className={styles.icon_boxes}>
+                  <span className={styles.icon}>
+                    <NavLink to="/favorites">{heart_empty}</NavLink>
+                  </span>
+                  <span className={styles.numb}>0</span>
+                </div>
+              </>
+            ) : (
+              ""
+            )}
+            <div className={styles.icon_boxes}>
+              <span className={styles.icon}>
+                <NavLink to="/cart">{cartIcon}</NavLink>
+              </span>
+              <span className={styles.numb}>{numberOfCard}</span>
+            </div>
 
-          <div className={styles.icon_boxes}>
-            <span className={styles.icon}>
-              <NavLink to="/account">{profile}</NavLink>
-            </span>
+            <div className={styles.icon_boxes}>
+              <span className={styles.icon}>
+                <NavLink to="/account">{profile}</NavLink>
+              </span>
+            </div>
+            <div className={styles.icon_boxes}>
+              <span className={styles.icon}>
+                <NavLink to="/search">{search}</NavLink>
+              </span>
+            </div>
           </div>
-          <div className={styles.icon_boxes}>
-            <span className={styles.icon}>
-              <NavLink to="/search">{search}</NavLink>
-            </span>
-          </div>
-        </div>
-      </nav>
-    </div>
+        </nav>
+      </div>
+      {loggedIn?.role == "admin" ? <AdminBasic /> : ""}
+    </>
   );
 };
 

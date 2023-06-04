@@ -46,12 +46,16 @@ const Cart = () => {
       setUserFirebaseCart
     );
   }, [trigger]);
+  console.log(cartItems);
+  console.log(userCart);
 
   return (
     <section className="main-container">
       <div className={style.table_width_title}>
         <h3 className={style.title}>Cart</h3>
       </div>
+
+      {(cartItems == null && userCart?.length == 0) ? <h1>Cart is empty!</h1> : ""}
 
       {cartItems?.length > 0 ? (
         <>
