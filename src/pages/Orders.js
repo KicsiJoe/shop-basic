@@ -3,18 +3,21 @@ import { AuthContext } from "../contexts/AuthContext";
 import style from "../css/Orders.module.css";
 import { delOrder, getOrders, oneOrderPrice } from "../services/orders";
 import { v4 as uuid } from "uuid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { delete_icon } from "../icon/icons";
 import { getUsersNameWithId } from "../services/admin-service";
 import { ProductsContext } from "../contexts/ProductsContext";
+import { HelperContext } from "../contexts/HelperContext";
 
 const Orders = () => {
+  const navigate = useNavigate()
+
+  const { helper, setHelper }=  useContext(HelperContext)
   const { loggedIn } = useContext(AuthContext);
   const { productsList } = useContext(ProductsContext);
   const [orders, setOrders] = useState(null);
   const [users, setUsers] = useState(null);
   const [pushed, setPushed] = useState(false);
-  console.log(orders);
 
   useEffect(() => {
     if (loggedIn?.authId) {
@@ -78,7 +81,10 @@ const Orders = () => {
         </thead>
         <tbody>
           {orders &&
-            orders?.map(({ orderId, orderItems, time, userId }) => (
+            orders?.map(({ orderId, orderItems, time, userId }) => {
+              let totalPrice = oneOrderPrice(orderItems, productsList)
+
+              return (
               <tr key={uuid()}>
                 <td>{orderId}</td>
                 {loggedIn && users && loggedIn?.role == "admin" ? (
@@ -94,7 +100,7 @@ const Orders = () => {
                 )}
 
                 <td>
-                  {oneOrderPrice(orderItems, productsList)} <span>EUR</span>
+                  {totalPrice} <span>EUR</span>
                 </td>
 
                 <td className={style.list_of_items}>
@@ -109,8 +115,8 @@ const Orders = () => {
                 </td>
                 <td className={style.links_box}>
                   <div>
-                    <Link to={`/orders/edit/${""}`}>Edit</Link> |
-                    <Link to={`/orders/del/${""}`}>Delete</Link> |
+                    <Link to={`/order/edit/${orderId}`}>Edit</Link> |
+                    <a onClick={()=>deletePage(orderId, orderItems, time, userId, totalPrice )}  >Delete</a> |
                     <span
                       onClick={() =>
                         delOrder(orderId, userId).then((res) =>
@@ -124,11 +130,16 @@ const Orders = () => {
                   </div>
                 </td>
               </tr>
-            ))}
+            )})}
         </tbody>
       </table>
     </section>
   );
+  function deletePage( orderId, orderItems, time, userId,totalPrice){
+    // to={`/order/delete/${orderId}`}
+    setHelper( {orderId, orderItems, time, userId, totalPrice})
+    navigate(`/order/delete/${orderId}`)
+  }
 };
 
 export default Orders;

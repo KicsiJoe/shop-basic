@@ -2,6 +2,8 @@ import {
   getOnePicUrlFromFirebase,
   savePicFirebase,
 } from "../repositories/pic-repo";
+import { productId_quantityToCards } from "./cart-services";
+
 
 export function checkInputs(inputs) {
   if (
@@ -61,12 +63,13 @@ export const timeFormatter = (separator1, tLetter, separator2, hide) => {
 export const cardObjWithIdToFBform = (objWithId) => {
   let newObj = {};
   objWithId.forEach(([obj, quantity]) => {
-    let prodId = obj["productId"]
+    let prodId = obj["productId"];
     newObj = { ...newObj, [prodId]: quantity };
   });
   return newObj;
 };
-export const FbformToObjWithId = () => {
-
+export const FbformToCartForm=(orderItems, callback) => {
+  console.log(orderItems);
+  productId_quantityToCards(orderItems, callback)
 
 };

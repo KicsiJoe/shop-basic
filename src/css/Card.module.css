@@ -1,5 +1,5 @@
 .card_box {
-    box-sizing: border-box;
+  box-sizing: border-box;
   border: 1px solid black;
   width: 100%;
   display: flex;
@@ -10,29 +10,47 @@
 }
 
 .card_box img {
-    height: 60%;
-   box-sizing: content-box; 
-   object-fit: cover;
-    overflow: hidden;
-   display: block;
-   width: 100%;
-   margin-bottom: 10px;
-   
+  height: 60%;
+  box-sizing: content-box;
+  object-fit: cover;
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .card_box > * {
-    margin: 0;
+  margin: 0;
+}
+
+.addToCart svg {
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
 }
 
 
-.addToCart svg{
-    width: 2em;
-    height: 2em;
-    cursor: pointer;
+.icon_box svg, .icon_box path, .icon_box a {
+  display: block;
+  width: 2em;
+  height: 2em;
 }
 
+ .icon_box {
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    align-items: center;
+ 
+}
 
-
-
+.icon svg {
+    color: red;
+}
+/*
+.icon_box a, .icon_box svg{
+    display: block;
+    height: 100%;
+} */
 
 

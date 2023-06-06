@@ -111,11 +111,6 @@ table td:nth-child(3) {
   text-align: right;
 }
 
-.delete_ques {
-  text-align: center;
-  color: red;
-}
-
 .del_icon {
   display: flex;
   height: 100%;

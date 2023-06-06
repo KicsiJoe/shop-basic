@@ -9,8 +9,7 @@ import { UserCartContext } from "./contexts/UserCartContext";
 import { ProductsContext } from "./contexts/ProductsContext";
 import { getProduct } from "./services/user-services";
 import { getUserCart } from "./services/cart-services";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { app } from "./repositories/firebase";
+import { HelperContext } from "./contexts/HelperContext";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState({});
@@ -19,6 +18,7 @@ function App() {
   const [userCart, setUserCart] = useState(null);
   const [trigger, setTrigger] = useState(true);
   const [triggerHeader, setTriggerHeader] = useState(true);
+  const [helper, setHelper] = useState(null);
   useEffect(() => {
     getProduct("all").then((res) => {
       if (res != null) {
@@ -63,14 +63,16 @@ function App() {
           <UserCartContext.Provider
             value={{ userCart, setUserCart, setTrigger }}
           >
-            <div className="main-container">
-              <Header />
+            <HelperContext.Provider value={{ helper, setHelper }}>
+              <div className="main-container">
+                <Header />
 
-              <div>
-                <Outlet className="outlet_container" />
+                <div>
+                  <Outlet className="outlet_container" />
+                </div>
+                <Footer />
               </div>
-              <Footer />
-            </div>
+            </HelperContext.Provider>
           </UserCartContext.Provider>
         </CartContext.Provider>
       </ProductsContext.Provider>

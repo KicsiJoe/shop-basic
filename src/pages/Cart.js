@@ -46,8 +46,6 @@ const Cart = () => {
       setUserFirebaseCart
     );
   }, [trigger]);
-  console.log(cartItems);
-  console.log(userCart);
 
   return (
     <section className="main-container">

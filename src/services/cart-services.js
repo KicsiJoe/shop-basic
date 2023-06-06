@@ -52,30 +52,33 @@ export const getUserCartWithModification = (userId, callback, callback2) => {
         return {};
       }
     })
-    .then((items) => {
-      if (Object.keys(items)) {
-        return getProductsData("all").then((res) => {
-          let itemArr = [];
-          let itemKeys = Object.keys(items);
-          itemKeys.forEach((objKey) => {
-            let finded = res.find((arr) => arr[0] == objKey);
-            if (finded == undefined) {
-              let finded = res.find((item) => item[0] == "deleted");
-              return itemArr.push(["deleted", finded]);
-            }
-            return itemArr.push([finded[1], items[objKey]]);
-          });
-          return itemArr;
-        });
-      } else {
-        return null;
-      }
-    })
-    .then((itemArr) => {
-      callback(itemArr);
-      return itemArr;
-    });
+    .then((items) => productId_quantityToCards(items, callback));
 };
+
+export const productId_quantityToCards=(items, callback)=>{
+ 
+    if (Object.keys(items)) {
+      return getProductsData("all").then((res) => {
+        let itemArr = [];
+        let itemKeys = Object.keys(items);
+        console.log(itemKeys);
+        itemKeys.forEach((objKey) => {
+          let finded = res.find((arr) => arr[0] == objKey);
+          if (finded == undefined) {
+            let finded = res.find((item) => item[0] == "deleted");
+            return itemArr.push(["deleted", finded]);
+          }
+          return itemArr.push([finded[1], items[objKey]]);
+        });
+        console.log(itemArr);
+        return callback(itemArr);
+      })
+    } else {
+      return  callback(null);
+    }
+  
+}
+
 
 export const updateUserOwnCart = (cartCopy, userId) => {
   return updateUserOwnCartFirebase(cartCopy, userId);

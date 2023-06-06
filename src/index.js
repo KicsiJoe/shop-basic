@@ -15,8 +15,9 @@ import Cart from "./pages/Cart";
 import AdminProductsList from "./pages/AdminProductsList";
 import AdminNewProduct from "./pages/AdminNewProduct";
 import AdminEditProduct from "./pages/AdminEditProduct";
-import AdminBasic from "./pages/AdminBasic";
 import Orders from "./pages/Orders";
+import OrderDelete from "./pages/OrderDelete";
+import OrderEdit from "./pages/OrderEdit";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,22 @@ const router = createBrowserRouter([
         element: (
           <AuthAnonym>
             <Orders />
+          </AuthAnonym>
+        ),
+      },
+      {
+        path: "/order/delete/:orderId",
+        element: (
+          <AuthAnonym>
+            <OrderDelete />
+          </AuthAnonym>
+        ),
+      },
+      {
+        path: "/order/edit/:orderId",
+        element: (
+          <AuthAnonym>
+            <OrderEdit />
           </AuthAnonym>
         ),
       },

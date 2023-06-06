@@ -26,7 +26,6 @@ const Header = () => {
   const [numberOfCard, setNumberOfCard] = useState(0);
 
   useEffect(() => {
-    //Itt jarunk => headerben a kosarban mi jelenjen meg szam, ha be van lépve, vagy sem...
     if (loggedIn.authId) {
       setNumberOfCard(Object.keys(userCart).length);
     } else {
